@@ -11,37 +11,47 @@ using Geohashing.Resources;
 using Microsoft.Phone.Maps.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Microsoft.Phone.Maps.Toolkit;
+using Windows.Devices.Geolocation;
 
 namespace Geohashing
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
-		// Constructor
+		MapLayer currentLocationLayer;
+		Geolocator locator;
+
 		public MainPage()
 		{
 			InitializeComponent();
 
 			PointMapToCurrentGeohash();
 
-			// Sample code to localize the ApplicationBar
-			//BuildLocalizedApplicationBar();
+			currentLocationLayer = new MapLayer();
+			locator = new Geolocator();
+			locator.DesiredAccuracy = PositionAccuracy.High;
+			locator.MovementThreshold = 100;
+			locator.PositionChanged += updateCurrentLocation;
+			map.Layers.Add(currentLocationLayer);
 		}
 
-		// Sample code for building a localized ApplicationBar
-		//private void BuildLocalizedApplicationBar()
-		//{
-		//    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-		//    ApplicationBar = new ApplicationBar();
-
-		//    // Create a new button and set the text value to the localized string from AppResources.
-		//    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-		//    appBarButton.Text = AppResources.AppBarButtonText;
-		//    ApplicationBar.Buttons.Add(appBarButton);
-
-		//    // Create a new menu item with the localized string from AppResources.
-		//    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-		//    ApplicationBar.MenuItems.Add(appBarMenuItem);
-		//}
+		private void updateCurrentLocation(Geolocator g, PositionChangedEventArgs e)
+		{
+			Dispatcher.BeginInvoke(() =>
+			{
+				currentLocationLayer.Clear();
+				System.Device.Location.GeoCoordinate coords = new System.Device.Location.GeoCoordinate(e.Position.Coordinate.Latitude, e.Position.Coordinate.Longitude);
+				currentLocationLayer.Add(new MapOverlay
+				{
+					GeoCoordinate = coords,
+					Content = new Pushpin
+					{
+						GeoCoordinate = coords
+					},
+					PositionOrigin = new Point(0, 1)
+				});
+			});
+		}
 
 		// Map Layer code from http://wp.qmatteoq.com/maps-in-windows-phone-8-and-phone-toolkit-a-winning-team-part-1/
 		public async void PointMapToCurrentGeohash()
@@ -51,16 +61,17 @@ namespace Geohashing
 			MapOverlay overlay = new MapOverlay
 			{
 				GeoCoordinate = geohash.Position,
-				Content = new Ellipse
+				Content = new Pushpin
 				{
-					Fill = new SolidColorBrush(Colors.Red),
-					Width = 40,
-					Height = 40
-				}
+					GeoCoordinate = geohash.Position
+				},
+				PositionOrigin = new Point(0, 1)
 			};
 			MapLayer layer = new MapLayer();
 			layer.Add(overlay);
 			map.Layers.Add(layer);
+
+			map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
 		}
 	}
 }
