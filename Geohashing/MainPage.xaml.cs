@@ -8,6 +8,9 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Geohashing.Resources;
+using Microsoft.Phone.Maps.Controls;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Geohashing
 {
@@ -17,6 +20,8 @@ namespace Geohashing
 		public MainPage()
 		{
 			InitializeComponent();
+
+			PointMapToCurrentGeohash();
 
 			// Sample code to localize the ApplicationBar
 			//BuildLocalizedApplicationBar();
@@ -37,5 +42,25 @@ namespace Geohashing
 		//    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
 		//    ApplicationBar.MenuItems.Add(appBarMenuItem);
 		//}
+
+		// Map Layer code from http://wp.qmatteoq.com/maps-in-windows-phone-8-and-phone-toolkit-a-winning-team-part-1/
+		public async void PointMapToCurrentGeohash()
+		{
+			Geohash geohash = await Geohash.Get();
+
+			MapOverlay overlay = new MapOverlay
+			{
+				GeoCoordinate = geohash.Position,
+				Content = new Ellipse
+				{
+					Fill = new SolidColorBrush(Colors.Red),
+					Width = 40,
+					Height = 40
+				}
+			};
+			MapLayer layer = new MapLayer();
+			layer.Add(overlay);
+			map.Layers.Add(layer);
+		}
 	}
 }
