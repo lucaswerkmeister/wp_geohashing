@@ -32,7 +32,7 @@ namespace Geohashing
 			return await Get(DateTime.Now);
 		}
 
-		public static async Task<Geohash> Get(Geocoordinate position)
+		public static async Task<Geohash> Get(GeoCoordinate position)
 		{
 			return await Get(position, DateTime.Now);
 		}
@@ -42,10 +42,10 @@ namespace Geohashing
 			Geolocator geolocator = new Geolocator();
 			geolocator.DesiredAccuracyInMeters = 50;
 
-			return await Get((await geolocator.GetGeopositionAsync()).Coordinate, date);
+			return await Get((await geolocator.GetGeopositionAsync()).Coordinate.Convert(), date);
 		}
 
-		public static async Task<Geohash> Get(Geocoordinate position, DateTime date)
+		public static async Task<Geohash> Get(GeoCoordinate position, DateTime date)
 		{
 			HttpWebResponse response = await HttpWebRequest.Create("http://relet.net/geo/" + (int)position.Latitude + "/" + (int)position.Longitude + "/" + date.ToString("yyyy-MM-dd")).GetResponseAsync();
 			string html;
@@ -80,7 +80,7 @@ namespace Geohashing
 		public NoGeohashException(string message) : base(message) { }
 	}
 
-	static class HttpWebRequestExtension
+	public static class Extensions
 	{
 		// From http://matthiasshapiro.com/2012/12/10/window-8-win-phone-code-sharing-httpwebrequest-getresponseasync/
 		public static Task<HttpWebResponse> GetResponseAsync(this WebRequest request)
@@ -101,6 +101,11 @@ namespace Geohashing
 					}
 				}, request);
 			return taskComplete.Task;
+		}
+
+		public static GeoCoordinate Convert(this Geocoordinate coords)
+		{
+			return new GeoCoordinate(coords.Latitude, coords.Longitude);
 		}
 	}
 }

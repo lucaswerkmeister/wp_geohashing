@@ -57,7 +57,13 @@
 
 			<TextBlock x:Name="progressText" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" TextWrapping="Wrap" Text="Loading hash.." Visibility="Collapsed"/>
 			<ProgressBar x:Name="progressBar" IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Grid.Row="1" Visibility="Collapsed"/>
-			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2"/>
+			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Hold="map_Hold">
+				<toolkit:ContextMenuService.ContextMenu>
+					<toolkit:ContextMenu x:Name="mapContextMenu">
+						<toolkit:MenuItem Header="Use this graticule" Tap="changeGraticule"/>
+					</toolkit:ContextMenu>
+				</toolkit:ContextMenuService.ContextMenu>
+			</maps:Map>
 		</Grid>
 
 	</Grid>

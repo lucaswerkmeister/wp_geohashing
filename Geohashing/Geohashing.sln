@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geohashing", "Geohashing.csproj", "{2D465AD8-6C86-488D-AE1B-FCF8EAC281C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\ConsoleApplication1\Test.csproj", "{3B3FABEE-0755-4225-8077-45A2DB7A0954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{3B3FABEE-0755-4225-8077-45A2DB7A0954}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
