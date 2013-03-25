@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Geohashing.Resources;
+﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
-using System.Windows.Shapes;
-using System.Windows.Media;
 using Microsoft.Phone.Maps.Toolkit;
+using System.Windows;
 using Windows.Devices.Geolocation;
 
 namespace Geohashing
