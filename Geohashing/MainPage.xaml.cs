@@ -45,35 +45,14 @@ namespace Geohashing
 			});
 		}
 
-		// Map Layer code from http://wp.qmatteoq.com/maps-in-windows-phone-8-and-phone-toolkit-a-winning-team-part-1/
 		public async void PointMapToCurrentGeohash()
 		{
-			LoadGeohash((await locator.GetGeopositionAsync()).Coordinate, DateTime.Now);
-		}
-
-		public async void LoadGeohash(Geocoordinate position, DateTime date)
-		{
-			progressText.Text = "Loading hash";
+			progressText.Text = "Loading hash...";
 			progressText.Visibility = progressBar.Visibility = Visibility.Visible;
 
 			try
 			{
-				geohash = await Geohash.Get(position, date);
-
-				MapOverlay overlay = new MapOverlay
-				{
-					GeoCoordinate = geohash.Position,
-					Content = new Pushpin
-					{
-						GeoCoordinate = geohash.Position
-					},
-					PositionOrigin = new Point(0, 1)
-				};
-				MapLayer layer = new MapLayer();
-				layer.Add(overlay);
-				map.Layers.Add(layer);
-
-				map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+				LoadGeohash((await locator.GetGeopositionAsync()).Coordinate, DateTime.Now);
 
 				progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;
 			}
@@ -82,6 +61,31 @@ namespace Geohashing
 				progressBar.Visibility = Visibility.Collapsed;
 				progressText.Text = "Unable to load hash";
 			}
+		}
+
+		public async void LoadGeohash(Geocoordinate position, DateTime date)
+		{
+			geohash = await Geohash.Get(position, date);
+
+			MapOverlay overlay = new MapOverlay
+			{
+				GeoCoordinate = geohash.Position,
+				Content = new Pushpin
+				{
+					GeoCoordinate = geohash.Position
+				},
+				PositionOrigin = new Point(0, 1)
+			};
+			MapLayer layer = new MapLayer();
+			layer.Add(overlay);
+			map.Layers.Add(layer);
+
+			map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+		}
+
+		private void Reload_Click(object sender, EventArgs e)
+		{
+			PointMapToCurrentGeohash();
 		}
 	}
 }
