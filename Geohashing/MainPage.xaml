@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     x:Class="Geohashing.MainPage"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -48,9 +49,15 @@
 
 		<!--ContentPanel - place additional content here-->
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-			<maps:Map x:Name="map" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="436" RenderTransformOrigin="0.018,0.022" Height="587"/>
-
+			<TextBlock x:Name="progressText" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" TextWrapping="Wrap" Text="Loading hash.." Visibility="Collapsed"/>
+			<ProgressBar x:Name="progressBar" IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Grid.Row="1" Visibility="Collapsed"/>
+			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2"/>
 		</Grid>
 
 		<!--Uncomment to see an alignment grid to help ensure your controls are

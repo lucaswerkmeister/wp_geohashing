@@ -52,6 +52,13 @@ namespace Geohashing
 			using (StreamReader sr = new StreamReader(response.GetResponseStream()))
 				html = await sr.ReadToEndAsync();
 
+			Regex rErr = new Regex("\"error\": \"([^\"]*)\"");
+			Match mErr = rErr.Match(html);
+			Group gErr = mErr.Groups[1];
+			string sErr = gErr.Value;
+			if (sErr.Length > 0)
+				throw new NoGeohashException(sErr);
+			
 			Regex rLat = new Regex("\"lat\": (-?[0-9.]*)");
 			Match mLat = rLat.Match(html);
 			Group gLat = mLat.Groups[1];
@@ -66,6 +73,11 @@ namespace Geohashing
 
 			return new Geohash(new GeoCoordinate(lat, lon));
 		}
+	}
+
+	public class NoGeohashException : Exception
+	{
+		public NoGeohashException(string message) : base(message) { }
 	}
 
 	static class HttpWebRequestExtension

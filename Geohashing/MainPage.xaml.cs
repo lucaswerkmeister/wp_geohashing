@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
+using System;
 using System.Windows;
 using Windows.Devices.Geolocation;
 
@@ -10,19 +11,20 @@ namespace Geohashing
 	{
 		MapLayer currentLocationLayer;
 		Geolocator locator;
+		Geohash geohash;
 
 		public MainPage()
 		{
 			InitializeComponent();
 
-			PointMapToCurrentGeohash();
-
 			currentLocationLayer = new MapLayer();
+			map.Layers.Add(currentLocationLayer);
 			locator = new Geolocator();
 			locator.DesiredAccuracy = PositionAccuracy.High;
 			locator.MovementThreshold = 100;
 			locator.PositionChanged += updateCurrentLocation;
-			map.Layers.Add(currentLocationLayer);
+
+			PointMapToCurrentGeohash();
 		}
 
 		private void updateCurrentLocation(Geolocator g, PositionChangedEventArgs e)
@@ -46,22 +48,40 @@ namespace Geohashing
 		// Map Layer code from http://wp.qmatteoq.com/maps-in-windows-phone-8-and-phone-toolkit-a-winning-team-part-1/
 		public async void PointMapToCurrentGeohash()
 		{
-			Geohash geohash = await Geohash.Get();
+			LoadGeohash((await locator.GetGeopositionAsync()).Coordinate, DateTime.Now);
+		}
 
-			MapOverlay overlay = new MapOverlay
+		public async void LoadGeohash(Geocoordinate position, DateTime date)
+		{
+			progressText.Text = "Loading hash";
+			progressText.Visibility = progressBar.Visibility = Visibility.Visible;
+
+			try
 			{
-				GeoCoordinate = geohash.Position,
-				Content = new Pushpin
-				{
-					GeoCoordinate = geohash.Position
-				},
-				PositionOrigin = new Point(0, 1)
-			};
-			MapLayer layer = new MapLayer();
-			layer.Add(overlay);
-			map.Layers.Add(layer);
+				geohash = await Geohash.Get(position, date);
 
-			map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+				MapOverlay overlay = new MapOverlay
+				{
+					GeoCoordinate = geohash.Position,
+					Content = new Pushpin
+					{
+						GeoCoordinate = geohash.Position
+					},
+					PositionOrigin = new Point(0, 1)
+				};
+				MapLayer layer = new MapLayer();
+				layer.Add(overlay);
+				map.Layers.Add(layer);
+
+				map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+
+				progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;
+			}
+			catch (NoGeohashException)
+			{
+				progressBar.Visibility = Visibility.Collapsed;
+				progressText.Text = "Unable to load hash";
+			}
 		}
 	}
 }
