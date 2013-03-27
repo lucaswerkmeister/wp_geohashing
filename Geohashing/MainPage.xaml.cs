@@ -127,6 +127,11 @@ namespace Geohashing
 			PointMapToCurrentGeohash();
 		}
 
+		private void Settings_Click(object sender, EventArgs e)
+		{
+			NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+		}
+
 		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			LoadGeohash(lastMapHold, DateTime.Now);

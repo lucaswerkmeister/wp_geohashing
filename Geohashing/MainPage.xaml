@@ -88,6 +88,7 @@
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Mode="Minimized" IsVisible="True" IsMenuEnabled="True">
 			<shell:ApplicationBarIconButton Click="Reload_Click" IconUri="/Images/refresh.png" Text="reload"/>
+			<shell:ApplicationBarIconButton Click="Settings_Click" IconUri="/Images/feature.settings.png" Text="settings"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
