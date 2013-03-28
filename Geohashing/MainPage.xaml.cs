@@ -40,12 +40,37 @@ namespace Geohashing
 
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
-			locator = new Geolocator();
-			locator.DesiredAccuracy = PositionAccuracy.High;
-			locator.MovementThreshold = 100;
-			locator.PositionChanged += updateCurrentLocation;
 
-			PointMapToCurrentGeohash();
+			if (SettingsPage.Localizing != SettingsPage.GeoPrecision.Disabled)
+			{
+				locator = new Geolocator();
+				locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+				locator.MovementThreshold = 100;
+				locator.PositionChanged += updateCurrentLocation;
+
+				PointMapToCurrentGeohash();
+			}
+
+			SettingsPage.GeoPrecisionChanged += (sender, e) =>
+				{
+					if ((SettingsPage.GeoPrecision)sender == SettingsPage.GeoPrecision.Disabled)
+					{
+						locator = new Geolocator();
+						locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+						locator.MovementThreshold = 100;
+						locator.PositionChanged += updateCurrentLocation;
+
+						PointMapToCurrentGeohash();
+					}
+
+					if (SettingsPage.Localizing == SettingsPage.GeoPrecision.Disabled)
+					{
+						locator = null;
+						currentLocationLayer.Clear();
+					}
+					else
+						locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+				};
 		}
 
 		private void updateCurrentLocation(Geolocator g, PositionChangedEventArgs e)

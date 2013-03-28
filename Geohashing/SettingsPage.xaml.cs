@@ -1,4 +1,21 @@
-﻿using Microsoft.Phone.Controls;
+﻿/*
+ * Geohashing, a Windows Phone 8 app for geohashing.
+ * Copyright (C) 2013  Lucas Werkmeister
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+using Microsoft.Phone.Controls;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -14,7 +31,10 @@ namespace Geohashing
 
 		private const GeoPrecision geoPrecisionSettingDefault = GeoPrecision.Default;
 
-		private IsolatedStorageSettings isolatedStore;
+		public delegate void SettingChangedEventHandler(object sender, SettingChangedEventArgs e);
+		public static event SettingChangedEventHandler GeoPrecisionChanged;
+
+		private static IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
 		public enum GeoPrecision
 		{
@@ -25,7 +45,7 @@ namespace Geohashing
 			[Description("High precision")]
 			High
 		}
-		public GeoPrecision Localizing
+		public static GeoPrecision Localizing
 		{
 			get
 			{
@@ -33,8 +53,13 @@ namespace Geohashing
 			}
 			set
 			{
-				AddOrUpdateValue(geoPrecisionSettingName, value);
-				Save();
+				GeoPrecision oldValue = GetValueOrDefault(geoPrecisionSettingName, geoPrecisionSettingDefault);
+				if (oldValue != value)
+				{
+					AddOrUpdateValue(geoPrecisionSettingName, value);
+					Save();
+					GeoPrecisionChanged(oldValue, new SettingChangedEventArgs(geoPrecisionSettingName));
+				}
 			}
 		}
 
@@ -47,9 +72,6 @@ namespace Geohashing
 			foreach (GeoPrecision p in rawValues)
 				values.Add((typeof(GeoPrecision).GetMember(p.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
 			localizing.ItemsSource = values;
-
-			if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
-				isolatedStore = IsolatedStorageSettings.ApplicationSettings;
 		}
 
 		/// <summary>
@@ -58,7 +80,7 @@ namespace Geohashing
 		/// <param name="Key"></param>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public bool AddOrUpdateValue(string Key, Object value)
+		public static bool AddOrUpdateValue(string Key, Object value)
 		{
 			bool valueChanged = false;
 
@@ -91,7 +113,7 @@ namespace Geohashing
 		/// <param name="Key"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public valueType GetValueOrDefault<valueType>(string Key, valueType defaultValue)
+		public static valueType GetValueOrDefault<valueType>(string Key, valueType defaultValue)
 		{
 			valueType value;
 
@@ -113,7 +135,7 @@ namespace Geohashing
 		/// <summary>
 		/// Save the settings.
 		/// </summary>
-		public void Save()
+		public static void Save()
 		{
 			isolatedStore.Save();
 		}
@@ -129,6 +151,16 @@ namespace Geohashing
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			return Enum.GetValues(typeof(Geohashing.SettingsPage.GeoPrecision)).GetValue((int)value);
+		}
+	}
+
+	public class SettingChangedEventArgs : EventArgs
+	{
+		public string SettingName { get; private set; }
+
+		public SettingChangedEventArgs(string settingName)
+		{
+			this.SettingName = settingName;
 		}
 	}
 }
