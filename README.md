@@ -18,6 +18,6 @@ I don't think the app is ready for publishing, so if you want to use it already,
 Contributing
 ============
 You can contribute by:
-* [Reporting bugs](https://github.com/lucaswerkmeister/wp_geohashing/issues Issue tracker)
+* [Reporting bugs](https://github.com/lucaswerkmeister/wp_geohashing/issues)
 * Requesting features (issue with label "enhancement")
 * Contributing code.
