@@ -30,14 +30,13 @@
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	mc:Ignorable="d"
-	shell:SystemTray.IsVisible="True"
-	x:Name="_this">
+	shell:SystemTray.IsVisible="True">
 
 	<phone:PhoneApplicationPage.Resources>
 		<local:GeoPrecisionToIntConverter x:Name="geoPrecisionIntConverter"/>
 	</phone:PhoneApplicationPage.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="Transparent">
+	<Grid Background="Transparent">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
@@ -48,10 +47,11 @@
 			<TextBlock Text="Settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
-		<StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+		<StackPanel Grid.Row="1" Margin="12,0,12,0">
 			<TextBlock Text="Localizing" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 			<toolkit:ListPicker x:Name="localizing" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionMode="Single"
 								SelectedIndex="{Binding ElementName=_this, Path=Localizing, Converter={StaticResource geoPrecisionIntConverter}, Mode=TwoWay}"/>
+			<CheckBox Content="Auto-zoom" IsChecked="{Binding ElementName=_this, Path=AutoZoom}"/>
 		</StackPanel>
 	</Grid>
 

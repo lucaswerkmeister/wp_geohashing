@@ -32,40 +32,18 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot" Background="Transparent">
+	<Grid Background="Transparent">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<!-- LOCALIZATION NOTE:
-            To localize the displayed strings copy their values to appropriately named
-            keys in the app's neutral language resource file (AppResources.resx) then
-            replace the hard-coded text value between the attributes' quotation marks
-            with the binding clause whose path points to that string name.
-
-            For example:
-
-                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
-
-            This binding points to the template's string resource named "ApplicationTitle".
-
-            Adding supported languages in the Project Properties tab will create a
-            new resx file per language that can carry the translated values of your
-            UI strings. The binding in these examples will cause the value of the
-            attributes to be drawn from the .resx file that matches the
-            CurrentUICulture of the app at run time.
-         -->
-
-		<!--TitlePanel contains the name of the application and page title-->
-		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+		<StackPanel Grid.Row="0" Margin="12,17,0,28">
 			<TextBlock Text="Geohashing" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
 			<TextBlock Text="Today's hash" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
-		<!--ContentPanel - place additional content here-->
-		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+		<Grid Grid.Row="1" Margin="12,0,12,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
@@ -76,7 +54,7 @@
 			<ProgressBar x:Name="progressBar" IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Grid.Row="1" Visibility="Collapsed"/>
 			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Hold="map_Hold">
 				<toolkit:ContextMenuService.ContextMenu>
-					<toolkit:ContextMenu x:Name="mapContextMenu">
+					<toolkit:ContextMenu>
 						<toolkit:MenuItem Header="Use this graticule" Tap="changeGraticule"/>
 					</toolkit:ContextMenu>
 				</toolkit:ContextMenuService.ContextMenu>

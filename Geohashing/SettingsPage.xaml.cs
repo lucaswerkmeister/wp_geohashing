@@ -25,26 +25,29 @@ using System.IO.IsolatedStorage;
 
 namespace Geohashing
 {
+	public enum GeoPrecision
+	{
+		[Description("Disabled")]
+		Disabled,
+		[Description("Default precision")]
+		Default,
+		[Description("High precision")]
+		High
+	}
+	
 	public partial class SettingsPage : PhoneApplicationPage
 	{
 		private const string geoPrecisionSettingName = "GeoPrecision";
+		private const string autoZoomSettingName = "AutoZoom";
 
 		private const GeoPrecision geoPrecisionSettingDefault = GeoPrecision.Default;
+		private const bool autoZoomSettingDefault = true;
 
-		public delegate void SettingChangedEventHandler(object sender, SettingChangedEventArgs e);
-		public static event SettingChangedEventHandler GeoPrecisionChanged;
+		public static event EventHandler<SettingChangedEventArgs> GeoPrecisionChanged;
+		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
 
 		private static IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
-		public enum GeoPrecision
-		{
-			[Description("Disabled")]
-			Disabled,
-			[Description("Default precision")]
-			Default,
-			[Description("High precision")]
-			High
-		}
 		public static GeoPrecision Localizing
 		{
 			get
@@ -54,11 +57,27 @@ namespace Geohashing
 			set
 			{
 				GeoPrecision oldValue = GetValueOrDefault(geoPrecisionSettingName, geoPrecisionSettingDefault);
-				if (oldValue != value)
+				if (AddOrUpdateValue(geoPrecisionSettingName, value))
 				{
-					AddOrUpdateValue(geoPrecisionSettingName, value);
 					Save();
 					GeoPrecisionChanged(oldValue, new SettingChangedEventArgs(geoPrecisionSettingName));
+				}
+			}
+		}
+
+		public static bool AutoZoom
+		{
+			get
+			{
+				return GetValueOrDefault(autoZoomSettingName, autoZoomSettingDefault);
+			}
+			set
+			{
+				bool oldValue = GetValueOrDefault(autoZoomSettingName, autoZoomSettingDefault);
+				if (AddOrUpdateValue(autoZoomSettingName, value))
+				{
+					Save();
+					AutoZoomChanged(oldValue, new SettingChangedEventArgs(autoZoomSettingName));
 				}
 			}
 		}
@@ -75,60 +94,50 @@ namespace Geohashing
 		}
 
 		/// <summary>
-		/// Update a setting value. If the setting does not exist, then add the setting.
+		/// Updates a setting value, adding it if it is not present.
 		/// </summary>
-		/// <param name="Key"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public static bool AddOrUpdateValue(string Key, Object value)
+		/// <param name="key">The setting key.</param>
+		/// <param name="value">The setting value.</param>
+		/// <returns><code>true</code> if the setting was changed, <code>false</code> otherwise.</returns>
+		public static bool AddOrUpdateValue(string key, object value)
 		{
-			bool valueChanged = false;
-
 			// If the key exists
-			if (isolatedStore.Contains(Key))
+			if (isolatedStore.Contains(key))
 			{
 				// If the value has changed
-				if (isolatedStore[Key] != value)
+				if (isolatedStore[key] != value)
 				{
 					// Store the new value
-					isolatedStore[Key] = value;
-					valueChanged = true;
+					isolatedStore[key] = value;
+					return true;
 				}
 			}
 			// Otherwise create the key.
 			else
 			{
-				isolatedStore.Add(Key, value);
-				valueChanged = true;
+				isolatedStore.Add(key, value);
+				return true;
 			}
 
-			return valueChanged;
+			return false;
 		}
 
 
 		/// <summary>
-		/// Get the current value of the setting, or if it is not found, set the setting to the default setting.
+		/// Gets the current value of the setting or a default value if the setting is not present.
 		/// </summary>
-		/// <typeparam name="valueType"></typeparam>
-		/// <param name="Key"></param>
-		/// <param name="defaultValue"></param>
-		/// <returns></returns>
-		public static valueType GetValueOrDefault<valueType>(string Key, valueType defaultValue)
+		/// <typeparam name="T">The value type.</typeparam>
+		/// <param name="key">The setting key.</param>
+		/// <param name="defaultValue">The default value of the setting.</param>
+		/// <returns>The setting value, or (if not present) the default value.</returns>
+		public static T GetValueOrDefault<T>(string key, T defaultValue)
 		{
-			valueType value;
-
 			// If the key exists, retrieve the value.
-			if (isolatedStore.Contains(Key))
-			{
-				value = (valueType)isolatedStore[Key];
-			}
+			if (isolatedStore.Contains(key))
+				return (T)isolatedStore[key];
 			// Otherwise, use the default value.
 			else
-			{
-				value = defaultValue;
-			}
-
-			return value;
+				return defaultValue;
 		}
 
 
@@ -145,12 +154,12 @@ namespace Geohashing
 
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return (int)(Geohashing.SettingsPage.GeoPrecision)value;
+			return (int)(GeoPrecision)value;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return Enum.GetValues(typeof(Geohashing.SettingsPage.GeoPrecision)).GetValue((int)value);
+			return Enum.GetValues(typeof(GeoPrecision)).GetValue((int)value);
 		}
 	}
 

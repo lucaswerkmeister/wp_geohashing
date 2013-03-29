@@ -41,10 +41,10 @@ namespace Geohashing
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
 
-			if (SettingsPage.Localizing != SettingsPage.GeoPrecision.Disabled)
+			if (SettingsPage.Localizing != GeoPrecision.Disabled)
 			{
 				locator = new Geolocator();
-				locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+				locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
 				locator.MovementThreshold = 100;
 				locator.PositionChanged += updateCurrentLocation;
 
@@ -53,23 +53,23 @@ namespace Geohashing
 
 			SettingsPage.GeoPrecisionChanged += (sender, e) =>
 				{
-					if ((SettingsPage.GeoPrecision)sender == SettingsPage.GeoPrecision.Disabled)
+					if ((GeoPrecision)sender == GeoPrecision.Disabled)
 					{
 						locator = new Geolocator();
-						locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+						locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
 						locator.MovementThreshold = 100;
 						locator.PositionChanged += updateCurrentLocation;
 
 						PointMapToCurrentGeohash();
 					}
 
-					if (SettingsPage.Localizing == SettingsPage.GeoPrecision.Disabled)
+					if (SettingsPage.Localizing == GeoPrecision.Disabled)
 					{
 						locator = null;
 						currentLocationLayer.Clear();
 					}
 					else
-						locator.DesiredAccuracy = SettingsPage.Localizing == SettingsPage.GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
+						locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
 				};
 		}
 
@@ -132,10 +132,13 @@ namespace Geohashing
 					PositionOrigin = new Point(0, 1)
 				});
 
-				map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+				if (SettingsPage.AutoZoom)
+					map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
 
-				progressText.Dispatcher.BeginInvoke(()=>{
-				progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;});
+				progressText.Dispatcher.BeginInvoke(() =>
+				{
+					progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;
+				});
 			}
 			catch (NoGeohashException)
 			{

@@ -24,7 +24,6 @@
 
 	<!--Application Resources-->
 	<Application.Resources>
-		<local:LocalizedStrings xmlns:local="clr-namespace:Geohashing" x:Key="LocalizedStrings"/>
 	</Application.Resources>
 
 	<Application.ApplicationLifetimeObjects>

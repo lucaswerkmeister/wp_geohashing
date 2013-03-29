@@ -94,7 +94,9 @@ namespace Geohashing
 
 	public class NoGeohashException : Exception
 	{
+		public NoGeohashException() : base() { }
 		public NoGeohashException(string message) : base(message) { }
+		public NoGeohashException(string message, Exception innerException) : base(message, innerException) { }
 	}
 
 	public static class Extensions
@@ -102,6 +104,8 @@ namespace Geohashing
 		// From http://matthiasshapiro.com/2012/12/10/window-8-win-phone-code-sharing-httpwebrequest-getresponseasync/
 		public static Task<HttpWebResponse> GetResponseAsync(this WebRequest request)
 		{
+			if (request == null)
+				throw new ArgumentNullException("request");
 			var taskComplete = new TaskCompletionSource<HttpWebResponse>();
 			request.BeginGetResponse(asyncResponse =>
 				{
@@ -120,9 +124,11 @@ namespace Geohashing
 			return taskComplete.Task;
 		}
 
-		public static GeoCoordinate Convert(this Geocoordinate coords)
+		public static GeoCoordinate Convert(this Geocoordinate coordinates)
 		{
-			return new GeoCoordinate(coords.Latitude, coords.Longitude);
+			if (coordinates == null)
+				throw new ArgumentNullException("coordinates");
+			return new GeoCoordinate(coordinates.Latitude, coordinates.Longitude);
 		}
 	}
 }
