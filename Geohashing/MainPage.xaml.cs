@@ -20,6 +20,8 @@ using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
 using System;
 using System.Device.Location;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Windows.Devices.Geolocation;
 
@@ -27,12 +29,14 @@ namespace Geohashing
 {
 	public partial class MainPage : PhoneApplicationPage
 	{
-		MapLayer currentLocationLayer = new MapLayer();
-		MapLayer geohashLayer = new MapLayer();
-		Geolocator locator;
-		Geohash geohash;
+		private MapLayer currentLocationLayer = new MapLayer();
+		private MapLayer geohashLayer = new MapLayer();
+		private Geohash geohash;
+		private GeoCoordinate coordinate;
 
-		GeoCoordinate lastMapHold;
+		private Settings settings = new Settings();
+
+		private GeoCoordinate lastMapHold;
 
 		public MainPage()
 		{
@@ -41,86 +45,51 @@ namespace Geohashing
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
 
-			if (SettingsPage.Localizing != GeoPrecision.Disabled)
-			{
-				locator = new Geolocator();
-				locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
-				locator.MovementThreshold = 100;
-				locator.PositionChanged += updateCurrentLocation;
-
-				PointMapToCurrentGeohash();
-			}
-
-			SettingsPage.GeoPrecisionChanged += (sender, e) =>
-				{
-					if ((GeoPrecision)sender == GeoPrecision.Disabled)
-					{
-						locator = new Geolocator();
-						locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
-						locator.MovementThreshold = 100;
-						locator.PositionChanged += updateCurrentLocation;
-
-						PointMapToCurrentGeohash();
-					}
-
-					if (SettingsPage.Localizing == GeoPrecision.Disabled)
-					{
-						locator = null;
-						currentLocationLayer.Clear();
-					}
-					else
-						locator.DesiredAccuracy = SettingsPage.Localizing == GeoPrecision.Default ? PositionAccuracy.Default : PositionAccuracy.High;
-				};
+			new Thread(() =>
+				UpdateCurrentLocation()
+				).Start(); // Apparently, doing this from the constructor thread isn't allowed (Dispatcher neither)
 		}
 
-		private void updateCurrentLocation(Geolocator g, PositionChangedEventArgs e)
+		#region UI utility methods safe to call from any thread
+		private void startTask(string description)
+		{
+			Dispatcher.BeginInvoke(() =>
+			{
+				progressText.Text = description;
+				progressText.Visibility = progressBar.Visibility = Visibility.Visible;
+			});
+		}
+
+		private void endTask(string message = "")
+		{
+			Dispatcher.BeginInvoke(() =>
+			{
+				progressText.Text = message;
+				progressBar.Visibility = Visibility.Collapsed;
+				progressText.Visibility = message == String.Empty ? Visibility.Collapsed : Visibility.Visible;
+			});
+		}
+
+		private void redrawLocationPin()
 		{
 			Dispatcher.BeginInvoke(() =>
 			{
 				currentLocationLayer.Clear();
-				System.Device.Location.GeoCoordinate coords = new System.Device.Location.GeoCoordinate(e.Position.Coordinate.Latitude, e.Position.Coordinate.Longitude);
 				currentLocationLayer.Add(new MapOverlay
 				{
-					GeoCoordinate = coords,
+					GeoCoordinate = coordinate,
 					Content = new Pushpin
 					{
-						GeoCoordinate = coords
+						GeoCoordinate = coordinate
 					},
 					PositionOrigin = new Point(0, 1)
 				});
 			});
 		}
-
-		public async void PointMapToCurrentGeohash()
+		private void redrawGeohashPin()
 		{
-			progressText.Text = "Loading hash...";
-			progressText.Visibility = progressBar.Visibility = Visibility.Visible;
-
-			try
+			Dispatcher.BeginInvoke(() =>
 			{
-				LoadGeohash((await locator.GetGeopositionAsync()).Coordinate.Convert(), DateTime.Now);
-
-				progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;
-			}
-			catch (NoGeohashException)
-			{
-				progressBar.Visibility = Visibility.Collapsed;
-				progressText.Text = "Unable to load hash";
-			}
-		}
-
-		public async void LoadGeohash(GeoCoordinate position, DateTime date)
-		{
-			progressText.Dispatcher.BeginInvoke(() =>
-			{
-				progressText.Text = "Loading hash...";
-				progressText.Visibility = progressBar.Visibility = Visibility.Visible;
-			});
-
-			try
-			{
-				geohash = await Geohash.Get(position, date);
-
 				geohashLayer.Clear();
 				geohashLayer.Add(new MapOverlay
 				{
@@ -131,28 +100,64 @@ namespace Geohashing
 					},
 					PositionOrigin = new Point(0, 1)
 				});
+			});
+		}
 
-				if (SettingsPage.AutoZoom)
-					map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+		private void focus()
+		{
+			Dispatcher.BeginInvoke(() =>
+				map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic));
+		}
+		#endregion
 
-				progressText.Dispatcher.BeginInvoke(() =>
-				{
-					progressText.Visibility = progressBar.Visibility = Visibility.Collapsed;
-				});
-			}
-			catch (NoGeohashException)
+		public async void UpdateCurrentLocation()
+		{
+			startTask("Getting location...");
+
+			coordinate = (await new Geolocator { DesiredAccuracy = PositionAccuracy.Default }.GetGeopositionAsync()).Coordinate.Convert();
+			redrawLocationPin();
+
+			endTask();
+
+			PointMapToCurrentGeohash();
+		}
+
+		public async void PointMapToCurrentGeohash()
+		{
+			startTask("Loading hash...");
+
+			try
 			{
-				progressText.Dispatcher.BeginInvoke(() =>
-				{
-					progressBar.Visibility = Visibility.Collapsed;
-					progressText.Text = "Unable to load hash";
-				});
+				await LoadGeohash(coordinate, DateTime.Now);
+
+				endTask();
 			}
+			catch (NoGeohashException e)
+			{
+				endTask("Unable to load hash" + (e.Message.Contains("DJIA for") && e.Message.Contains("not available yet") ? ": DJIA N/A" : String.Empty));
+			}
+		}
+
+		public async Task<bool> LoadGeohash(GeoCoordinate position, DateTime date)
+		{
+			geohash = await Geohash.Get(position, date);
+
+			redrawGeohashPin();
+
+			if (settings.AutoZoom)
+				focus();
+
+			return true;
 		}
 
 		private void Reload_Click(object sender, EventArgs e)
 		{
 			PointMapToCurrentGeohash();
+		}
+
+		private void Relocate_Click(object sender, EventArgs e)
+		{
+			UpdateCurrentLocation();
 		}
 
 		private void Settings_Click(object sender, EventArgs e)
@@ -162,6 +167,7 @@ namespace Geohashing
 
 		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)
 		{
+			coordinate = lastMapHold;
 			LoadGeohash(lastMapHold, DateTime.Now);
 		}
 
