@@ -18,6 +18,24 @@ I don't think the app is ready for publishing, so if you want to use it already,
 Contributing
 ============
 You can contribute by:
-* [Reporting bugs](https://github.com/lucaswerkmeister/wp_geohashing/issues Issue tracker)
+* [Reporting bugs](https://github.com/lucaswerkmeister/wp_geohashing/issues)
 * Requesting features (issue with label "enhancement")
 * Contributing code.
+
+Planned features
+================
+Most of these are inspired (which is a fancy word for "copied") from the Android app:
+* Date selection
+* Map mode: Map/Satellite
+* Show distance to target
+* Wiki integration (might by tricky)
+  * Post message
+  * Upload picture
+    * Shoot pictures from within the app
+      * If possible, include the location in metadata
+  * Show graticule page
+* Send location to Maps app
+* More settings:
+  * Metric/Imperial units for distance
+  * Deg/Min/Sec for coordinates
+  * Wiki credentials (if I get the integration to work)
