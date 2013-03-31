@@ -114,12 +114,19 @@ namespace Geohashing
 		{
 			startTask("Getting location...");
 
-			coordinate = (await new Geolocator { DesiredAccuracy = PositionAccuracy.Default }.GetGeopositionAsync()).Coordinate.Convert();
-			redrawLocationPin();
+			try
+			{
+				coordinate = (await new Geolocator { DesiredAccuracy = PositionAccuracy.Default }.GetGeopositionAsync()).Coordinate.Convert();
+				redrawLocationPin();
 
-			endTask();
+				endTask();
 
-			PointMapToCurrentGeohash();
+				PointMapToCurrentGeohash();
+			}
+			catch (Exception)
+			{
+				endTask("Unable to fetch location");
+			}
 		}
 
 		public async void PointMapToCurrentGeohash()
