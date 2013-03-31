@@ -134,7 +134,15 @@ namespace Geohashing
 			}
 			catch (NoGeohashException e)
 			{
-				endTask("Unable to load hash" + (e.Message.Contains("DJIA for") && e.Message.Contains("not available yet") ? ": DJIA N/A" : String.Empty));
+				string message = "Unable to load hash";
+				switch (e.Cause)
+				{
+					case NoGeohashException.NoGeohashCause.NoDjia:
+						message += ": DJIA N/A"; break;
+					case NoGeohashException.NoGeohashCause.NoInternet:
+						message += ": No internet connection"; break;
+				}
+				endTask(message);
 			}
 		}
 

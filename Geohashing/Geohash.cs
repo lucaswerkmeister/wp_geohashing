@@ -65,6 +65,10 @@ namespace Geohashing
 		public static async Task<Geohash> Get(GeoCoordinate position, DateTime date)
 		{
 			HttpWebResponse response = await HttpWebRequest.Create("http://relet.net/geo/" + (int)position.Latitude + "/" + (int)position.Longitude + "/" + date.ToString("yyyy-MM-dd")).GetResponseAsync();
+			if (response.StatusCode == HttpStatusCode.NotFound)
+				throw new NoGeohashException(NoGeohashException.NoGeohashCause.NoInternet);
+			else if (response.StatusCode != HttpStatusCode.OK)
+				throw new NoGeohashException(NoGeohashException.NoGeohashCause.UnknownConnectionError);
 			string html;
 			using (StreamReader sr = new StreamReader(response.GetResponseStream()))
 				html = await sr.ReadToEndAsync();
@@ -94,9 +98,27 @@ namespace Geohashing
 
 	public class NoGeohashException : Exception
 	{
+		public enum NoGeohashCause { NoInternet, NoDjia, UnknownConnectionError, Unknown }
+
+		public NoGeohashCause Cause { get; private set; }
+
 		public NoGeohashException() : base() { }
-		public NoGeohashException(string message) : base(message) { }
-		public NoGeohashException(string message, Exception innerException) : base(message, innerException) { }
+		public NoGeohashException(string message)
+			: base(message)
+		{
+			if (message.Contains("DJIA for") && message.Contains("not available yet"))
+				Cause = NoGeohashCause.NoDjia;
+		}
+		public NoGeohashException(NoGeohashCause cause)
+		{
+			Cause = cause;
+		}
+		public NoGeohashException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+			if (message.Contains("DJIA for") && message.Contains("not available yet"))
+				Cause = NoGeohashCause.NoDjia;
+		}
 	}
 
 	public static class Extensions
