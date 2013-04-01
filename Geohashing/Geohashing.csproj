@@ -155,6 +155,8 @@
     <Content Include="Images\feature.settings.png" />
     <Content Include="Images\refresh.png" />
     <Content Include="license.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">

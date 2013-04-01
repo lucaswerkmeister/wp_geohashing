@@ -33,6 +33,11 @@ namespace Geohashing
 		private MapLayer geohashLayer = new MapLayer();
 		private Geohash geohash;
 		private GeoCoordinate coordinate;
+		private DateTime Date
+		{
+			get;
+			set;
+		}
 
 		private Settings settings = new Settings();
 
@@ -40,6 +45,8 @@ namespace Geohashing
 
 		public MainPage()
 		{
+			Date = DateTime.Now;
+
 			InitializeComponent();
 
 			map.Layers.Add(geohashLayer);
@@ -135,7 +142,7 @@ namespace Geohashing
 
 			try
 			{
-				await LoadGeohash(coordinate, DateTime.Now);
+				await LoadGeohash(coordinate, Date);
 
 				endTask();
 			}
@@ -183,12 +190,21 @@ namespace Geohashing
 		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			coordinate = lastMapHold;
-			LoadGeohash(lastMapHold, DateTime.Now);
+			LoadGeohash(lastMapHold, Date);
 		}
 
 		private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			lastMapHold = map.ConvertViewportPointToGeoCoordinate(e.GetPosition(map));
+		}
+
+		private void dateChanged(object sender, EventArgs e)
+		{
+			DateTime oldValue = Date;
+			DateTime? value = datePicker.Value;
+			Date = value == null ? DateTime.Now : (DateTime)value;
+			if (Date.Date != oldValue.Date)
+				PointMapToCurrentGeohash();
 		}
 	}
 }
