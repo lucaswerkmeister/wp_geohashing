@@ -3,7 +3,8 @@ A Geohashing app for the Windows Phone.
 Features
 ========
 * On startup, your location and the according Geohash is loaded.
-* You can also change the graticule by tapping and holding anywhere on the map, and choosing "Use this graticule" on the context menu.
+* You can change the graticule by tapping and holding anywhere on the map, and choosing "Use this graticule" on the context menu.
+* You can change the date using the DatePicker at the bottom.
 
 Installation
 ============
@@ -25,7 +26,6 @@ You can contribute by:
 Planned features
 ================
 Most of these are inspired (which is a fancy word for "copied") from the Android app:
-* Date selection
 * Map mode: Map/Satellite
 * Show distance to target
 * Wiki integration (might by tricky)
