@@ -16,34 +16,35 @@ namespace Geohashing
 
 	public class Settings
 	{
-		private const string geoPrecisionSettingName = "GeoPrecision";
+		private const string localizeSettingName="Localize";
 		private const string autoZoomSettingName = "AutoZoom";
 
-		private const GeoPrecision geoPrecisionSettingDefault = GeoPrecision.Default;
+		private const bool localizeSettingDefault=true;
 		private const bool autoZoomSettingDefault = true;
 
-		public static event EventHandler<SettingChangedEventArgs> GeoPrecisionChanged;
+		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
 
 		private IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
-		public GeoPrecision Localizing
+		public bool Localize
 		{
 			get
 			{
-				return GetValueOrDefault(geoPrecisionSettingName, geoPrecisionSettingDefault);
+				return GetValueOrDefault(localizeSettingName, localizeSettingDefault);
 			}
 			set
 			{
-				GeoPrecision oldValue = GetValueOrDefault(geoPrecisionSettingName, geoPrecisionSettingDefault);
-				if (AddOrUpdateValue(geoPrecisionSettingName, value))
+				bool oldValue = GetValueOrDefault(localizeSettingName, localizeSettingDefault);
+				if (AddOrUpdateValue(localizeSettingName, value))
 				{
 					Save();
-					if (GeoPrecisionChanged != null)
-						GeoPrecisionChanged(oldValue, new SettingChangedEventArgs(geoPrecisionSettingName));
+					if (LocalizeChanged != null)
+						LocalizeChanged(oldValue, new SettingChangedEventArgs(localizeSettingName));
 				}
 			}
 		}
+
 
 		public bool AutoZoom
 		{

@@ -48,10 +48,8 @@
 		</StackPanel>
 
 		<StackPanel Grid.Row="1" Margin="12,0,12,0">
-			<TextBlock Text="Localizing" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-			<toolkit:ListPicker x:Name="localizing" HorizontalAlignment="Stretch" VerticalAlignment="Top" SelectionMode="Single"
-								SelectedIndex="{Binding Source={StaticResource settings}, Path=Localizing, Converter={StaticResource geoPrecisionIntConverter}, Mode=TwoWay}"/>
-			<CheckBox Content="Auto-zoom" IsChecked="{Binding Source={StaticResource settings}, Path=AutoZoom, Mode=TwoWay}"/>
+			<CheckBox Content="Locate" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
+			<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
 		</StackPanel>
 	</Grid>
 

@@ -52,9 +52,10 @@ namespace Geohashing
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
 
-			new Thread(() =>
-				UpdateCurrentLocation()
-				).Start(); // Apparently, doing this from the constructor thread isn't allowed (Dispatcher neither)
+			if (settings.Localize)
+				new Thread(() =>
+					UpdateCurrentLocation()
+					).Start(); // Apparently, doing this from the constructor thread isn't allowed (Dispatcher neither)
 		}
 
 		#region UI utility methods safe to call from any thread
@@ -138,6 +139,9 @@ namespace Geohashing
 
 		public async void PointMapToCurrentGeohash()
 		{
+			if (coordinate == null)
+				return;
+
 			startTask("Loading hash...");
 
 			try

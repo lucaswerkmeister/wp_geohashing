@@ -30,12 +30,6 @@ namespace Geohashing
 		public SettingsPage()
 		{
 			InitializeComponent();
-
-			Array rawValues = Enum.GetValues(typeof(GeoPrecision));
-			List<string> values = new List<string>();
-			foreach (GeoPrecision p in rawValues)
-				values.Add((typeof(GeoPrecision).GetMember(p.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
-			localizing.ItemsSource = values;
 		}
 	}
 	public class GeoPrecisionToIntConverter : IValueConverter
