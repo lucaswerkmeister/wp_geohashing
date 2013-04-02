@@ -67,9 +67,10 @@
 
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Mode="Minimized" IsVisible="True" IsMenuEnabled="True">
-			<shell:ApplicationBarIconButton Click="Reload_Click" IconUri="/Images/refresh.png" Text="reload geohash"/>
-			<shell:ApplicationBarIconButton Click="Relocate_Click" IconUri="/Images/feature.search.png" Text="reload location"/>
-			<shell:ApplicationBarIconButton Click="Settings_Click" IconUri="/Images/feature.settings.png" Text="settings"/>
+			<shell:ApplicationBarIconButton Click="Reload_Click" IconUri="/Images/refresh.png" Text="Reload geohash"/>
+			<shell:ApplicationBarIconButton Click="Relocate_Click" IconUri="/Images/feature.search.png" Text="Reload location"/>
+			<shell:ApplicationBarIconButton Click="Settings_Click" IconUri="/Images/feature.settings.png" Text="Settings"/>
+			<shell:ApplicationBarIconButton Click="Goto_Click" IconUri="/Images/next.png" Text="Open in Maps"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 

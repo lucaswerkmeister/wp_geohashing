@@ -18,6 +18,7 @@
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Tasks;
 using System;
 using System.Device.Location;
 using System.Threading;
@@ -206,6 +207,14 @@ namespace Geohashing
 		private void Settings_Click(object sender, EventArgs e)
 		{
 			NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+		}
+
+		private void Goto_Click(object sender, EventArgs e)
+		{
+			new MapsDirectionsTask
+			{
+				End = new LabeledMapLocation("Geohash for " + Date.ToString("yyyy-MM-dd") + ' ' + geohash.Graticule.North + ", " + geohash.Graticule.West, geohash.Position)
+			}.Show();
 		}
 
 		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)

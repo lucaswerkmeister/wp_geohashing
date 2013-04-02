@@ -5,6 +5,7 @@ Features
 * On startup, your location and the according Geohash is loaded.
 * You can change the graticule by tapping and holding anywhere on the map, and choosing "Use this graticule" on the context menu.
 * You can change the date using the DatePicker at the bottom.
+* You can send the location to the Maps app for navigation instructions.
 * You can change the map mode in the settings.
 
 Installation
@@ -34,7 +35,6 @@ Most of these are inspired (which is a fancy word for "copied") from the Android
     * Shoot pictures from within the app
       * If possible, include the location in metadata
   * Show graticule page
-* Send location to Maps app
 * More settings:
   * Metric/Imperial units for distance
   * Deg/Min/Sec for coordinates

@@ -153,6 +153,7 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="Images\feature.search.png" />
     <Content Include="Images\feature.settings.png" />
+    <Content Include="Images\next.png" />
     <Content Include="Images\refresh.png" />
     <Content Include="license.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
