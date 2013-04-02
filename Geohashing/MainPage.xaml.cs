@@ -90,7 +90,8 @@ namespace Geohashing
 					GeoCoordinate = coordinate,
 					Content = new Pushpin
 					{
-						GeoCoordinate = coordinate
+						GeoCoordinate = coordinate,
+						Style = (Style)App.Current.Resources["pushpinLocation"]
 					},
 					PositionOrigin = new Point(0, 1)
 				});
@@ -106,7 +107,8 @@ namespace Geohashing
 					GeoCoordinate = geohash.Position,
 					Content = new Pushpin
 					{
-						GeoCoordinate = geohash.Position
+						GeoCoordinate = geohash.Position,
+						Style = (Style)App.Current.Resources["pushpinHash"]
 					},
 					PositionOrigin = new Point(0, 1)
 				});
