@@ -28,14 +28,16 @@ You can contribute by:
 Planned features
 ================
 Most of these are inspired (which is a fancy word for "copied") from the Android app:
-* Show distance to target
+* Pin graticules to start screen
+* Infobox
+  * Coordinates
+    * Settings: Deg/Min/Sec
+  * Distance to target
+    * Settings: Metric/Imperial
 * Wiki integration (might by tricky)
   * Post message
   * Upload picture
     * Shoot pictures from within the app
       * If possible, include the location in metadata
   * Show graticule page
-* More settings:
-  * Metric/Imperial units for distance
-  * Deg/Min/Sec for coordinates
-  * Wiki credentials (if I get the integration to work)
+  * Settings: credentials
