@@ -15,13 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Microsoft.Phone.Maps.Controls;
 using System;
 using System.Device.Location;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
@@ -36,6 +36,20 @@ namespace Geohashing
 			get
 			{
 				return position;
+			}
+		}
+
+		public LocationRectangle Graticule
+		{
+			get
+			{
+				int top = (int)Math.Ceiling(position.Latitude);
+				int left = (int)Math.Floor(position.Longitude);
+				return new LocationRectangle(
+					north: top,
+					west: left,
+					south: top - 1,
+					east: left + 1);
 			}
 		}
 

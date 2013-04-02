@@ -23,6 +23,7 @@ using System.Device.Location;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Windows.Devices.Geolocation;
 
 namespace Geohashing
@@ -31,6 +32,7 @@ namespace Geohashing
 	{
 		private MapLayer currentLocationLayer = new MapLayer();
 		private MapLayer geohashLayer = new MapLayer();
+		private MapPolygon graticulePolygon = new MapPolygon { FillColor = Colors.Transparent, StrokeColor = Colors.Red, StrokeThickness = 2 };
 		private Geohash geohash;
 		private GeoCoordinate coordinate;
 		private DateTime Date
@@ -110,6 +112,15 @@ namespace Geohashing
 				});
 			});
 		}
+		private void redrawGraticuleOutline()
+		{
+			Dispatcher.BeginInvoke(() =>
+			{
+				map.MapElements.Remove(graticulePolygon);
+				graticulePolygon.Path = CreateRectangle(geohash.Graticule);
+				map.MapElements.Add(graticulePolygon);
+			});
+		}
 
 		private void focus()
 		{
@@ -169,6 +180,7 @@ namespace Geohashing
 			geohash = await Geohash.Get(position, date);
 
 			redrawGeohashPin();
+			redrawGraticuleOutline();
 
 			if (settings.AutoZoom)
 				focus();
@@ -209,6 +221,18 @@ namespace Geohashing
 			Date = value == null ? DateTime.Now : (DateTime)value;
 			if (Date.Date != oldValue.Date)
 				PointMapToCurrentGeohash();
+		}
+
+		public static GeoCoordinateCollection CreateRectangle(LocationRectangle rect)
+		{
+			GeoCoordinateCollection ret = new GeoCoordinateCollection();
+
+			ret.Add(rect.Northwest);
+			ret.Add(rect.Northeast);
+			ret.Add(rect.Southeast);
+			ret.Add(rect.Southwest);
+
+			return ret;
 		}
 	}
 }
