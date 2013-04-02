@@ -22,6 +22,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.IO.IsolatedStorage;
+using Microsoft.Phone.Maps.Controls;
 
 namespace Geohashing
 {
@@ -30,19 +31,21 @@ namespace Geohashing
 		public SettingsPage()
 		{
 			InitializeComponent();
+
+			cartographicModeListPicker.ItemsSource = Enum.GetValues(typeof(MapCartographicMode));
 		}
 	}
-	public class GeoPrecisionToIntConverter : IValueConverter
+	public class CartographicModeIntConverter : IValueConverter
 	{
 
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return (int)(GeoPrecision)value;
+			return (int)(MapCartographicMode)value;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return Enum.GetValues(typeof(GeoPrecision)).GetValue((int)value);
+			return Enum.GetValues(typeof(MapCartographicMode)).GetValue((int)value);
 		}
 	}
 

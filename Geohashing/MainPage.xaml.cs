@@ -40,8 +40,7 @@ namespace Geohashing
 			get;
 			set;
 		}
-
-		private Settings settings = new Settings();
+		private Settings settings { get { return (Settings)App.Current.Resources["settings"]; } }
 
 		private GeoCoordinate lastMapHold;
 
@@ -53,6 +52,8 @@ namespace Geohashing
 
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
+			map.CartographicMode = settings.CartographicMode;
+			Settings.CartographicModeChanged += (sender, e) => Dispatcher.BeginInvoke(() => map.CartographicMode = settings.CartographicMode);
 
 			if (settings.Localize)
 				new Thread(() =>
@@ -127,7 +128,10 @@ namespace Geohashing
 		private void focus()
 		{
 			Dispatcher.BeginInvoke(() =>
-				map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic));
+			{
+				if (settings.AutoZoom)
+					map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+			});
 		}
 		#endregion
 
@@ -184,8 +188,7 @@ namespace Geohashing
 			redrawGeohashPin();
 			redrawGraticuleOutline();
 
-			if (settings.AutoZoom)
-				focus();
+			focus();
 
 			return true;
 		}

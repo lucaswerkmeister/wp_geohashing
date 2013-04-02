@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Phone.Maps.Controls;
+using System;
 using System.ComponentModel;
 using System.IO.IsolatedStorage;
 
@@ -18,12 +19,15 @@ namespace Geohashing
 	{
 		private const string localizeSettingName="Localize";
 		private const string autoZoomSettingName = "AutoZoom";
+		private const string cartographicModeSettingName="CartographicMode";
 
 		private const bool localizeSettingDefault=true;
 		private const bool autoZoomSettingDefault = true;
+		private const MapCartographicMode cartographicModeSettingDefault=MapCartographicMode.Road;
 
 		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
+		public static event EventHandler<SettingChangedEventArgs> CartographicModeChanged;
 
 		private IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
@@ -45,7 +49,6 @@ namespace Geohashing
 			}
 		}
 
-
 		public bool AutoZoom
 		{
 			get
@@ -60,6 +63,24 @@ namespace Geohashing
 					Save();
 					if (AutoZoomChanged != null)
 						AutoZoomChanged(oldValue, new SettingChangedEventArgs(autoZoomSettingName));
+				}
+			}
+		}
+
+		public MapCartographicMode CartographicMode
+		{
+			get
+			{
+				return GetValueOrDefault(cartographicModeSettingName, cartographicModeSettingDefault);
+			}
+			set
+			{
+				MapCartographicMode oldValue = GetValueOrDefault(cartographicModeSettingName, cartographicModeSettingDefault);
+				if (AddOrUpdateValue(cartographicModeSettingName, value))
+				{
+					Save();
+					if (CartographicModeChanged != null)
+						CartographicModeChanged(oldValue, new SettingChangedEventArgs(cartographicModeSettingName));
 				}
 			}
 		}

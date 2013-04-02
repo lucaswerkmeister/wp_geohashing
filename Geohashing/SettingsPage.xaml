@@ -33,7 +33,7 @@
 	shell:SystemTray.IsVisible="True">
 
 	<phone:PhoneApplicationPage.Resources>
-		<local:GeoPrecisionToIntConverter x:Name="geoPrecisionIntConverter"/>
+		<local:CartographicModeIntConverter x:Name="cartographicModeIntConverter"/>
 	</phone:PhoneApplicationPage.Resources>
 
 	<Grid Background="Transparent">
@@ -50,6 +50,8 @@
 		<StackPanel Grid.Row="1" Margin="12,0,12,0">
 			<CheckBox Content="Locate" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
 			<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
+			<TextBlock TextWrapping="Wrap" Text="Map mode"/>
+			<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource cartographicModeIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 		</StackPanel>
 	</Grid>
 
