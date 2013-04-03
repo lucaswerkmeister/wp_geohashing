@@ -29,15 +29,20 @@ Planned features
 ================
 Most of these are inspired (which is a fancy word for "copied") from the Android app:
 * Pin graticules to start screen
+* Search for nearest geohash:
+   1. Calculate the current geohash.
+   2. For every graticule that intersects a circle around the current location of radius (distance to geohash), calculate the geohash.
+   3. Each time a geohash is nearer than the current geohash, narrow the circle accordingly.
+   *  Near the poles, this will check more and more graticules; without a DJIA cache, the performance would be inacceptably slow.
 * Infobox
-  * Coordinates
-    * Settings: Deg/Min/Sec
-  * Distance to target
-    * Settings: Metric/Imperial
+   * Coordinates
+      * Settings: Deg/Min/Sec
+   * Distance to target
+      * Settings: Metric/Imperial
 * Wiki integration (might by tricky)
-  * Post message
-  * Upload picture
-    * Shoot pictures from within the app
-      * If possible, include the location in metadata
-  * Show graticule page
-  * Settings: credentials
+   * Post message
+   * Upload picture
+      * Shoot pictures from within the app
+         * If possible, include the location in metadata
+   * Show graticule page
+   * Settings: credentials
