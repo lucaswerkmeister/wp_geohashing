@@ -168,14 +168,14 @@ namespace Geohashing
 
 				endTask();
 			}
-			catch (NoGeohashException e)
+			catch (NoDjiaException e)
 			{
 				string message = "Unable to load hash";
 				switch (e.Cause)
 				{
-					case NoGeohashException.NoGeohashCause.NoDjia:
+					case NoDjiaException.NoDjiaCause.NotAvailable:
 						message += ": DJIA N/A"; break;
-					case NoGeohashException.NoGeohashCause.NoInternet:
+					case NoDjiaException.NoDjiaCause.NoInternet:
 						message += ": No internet connection"; break;
 				}
 				endTask(message);

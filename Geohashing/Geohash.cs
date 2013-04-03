@@ -16,11 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using Microsoft.Phone.Maps.Controls;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Digests;
 using System;
+using System.Collections.Generic;
 using System.Device.Location;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
@@ -29,6 +33,9 @@ namespace Geohashing
 {
 	public class Geohash
 	{
+		private static readonly DateTime Rule30WValidityStart = DateTime.Parse("2008-05-27");
+
+		private readonly DateTime date;
 		private readonly GeoCoordinate position;
 
 		public GeoCoordinate Position
@@ -53,8 +60,17 @@ namespace Geohashing
 			}
 		}
 
-		private Geohash(GeoCoordinate position)
+		public bool Rule30WApplies
 		{
+			get
+			{
+				return date.CompareTo(Rule30WValidityStart) >= 0 && position.Longitude > -30;
+			}
+		}
+
+		private Geohash(DateTime date, GeoCoordinate position)
+		{
+			this.date=date;
 			this.position = position;
 		}
 
@@ -78,60 +94,40 @@ namespace Geohashing
 
 		public static async Task<Geohash> Get(GeoCoordinate position, DateTime date)
 		{
-			HttpWebResponse response = await HttpWebRequest.Create("http://relet.net/geo/" + (int)position.Latitude + "/" + (int)position.Longitude + "/" + date.ToString("yyyy-MM-dd")).GetResponseAsync();
-			if (response.StatusCode == HttpStatusCode.NotFound)
-				throw new NoGeohashException(NoGeohashException.NoGeohashCause.NoInternet);
-			else if (response.StatusCode != HttpStatusCode.OK)
-				throw new NoGeohashException(NoGeohashException.NoGeohashCause.UnknownConnectionError);
-			string html;
-			using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-				html = await sr.ReadToEndAsync();
+			bool use30wRule = date.CompareTo(Rule30WValidityStart) >= 0 && position.Longitude > -30;
 
-			Regex rErr = new Regex("\"error\": \"([^\"]*)\"");
-			Match mErr = rErr.Match(html);
-			Group gErr = mErr.Groups[1];
-			string sErr = gErr.Value;
-			if (sErr.Length > 0)
-				throw new NoGeohashException(sErr);
+			string djia = await Djia.Get(use30wRule ? date.Subtract(TimeSpan.FromDays(1)) : date);
+			string dateString = date.ToString("yyyy-MM-dd");
+			byte[] hashInput = Encoding.UTF8.GetBytes(dateString + '-' + djia);
+			IDigest digest = new MD5Digest();
+			digest.BlockUpdate(hashInput, 0, hashInput.Length);
+			byte[] result = new byte[16];
+			digest.DoFinal(result, 0);
 
-			Regex rLat = new Regex("\"lat\": (-?[0-9.]*)");
-			Match mLat = rLat.Match(html);
-			Group gLat = mLat.Groups[1];
-			string sLat = gLat.Value;
-			double lat = Double.Parse(sLat, CultureInfo.InvariantCulture);
+			ulong part1 = ((ulong)result[0x0] << 0x38)
+				+ ((ulong)result[0x1] << 0x30)
+				+ ((ulong)result[0x2] << 0x28)
+				+ ((ulong)result[0x3] << 0x20)
+				+ ((ulong)result[0x4] << 0x18)
+				+ ((ulong)result[0x5] << 0x10)
+				+ ((ulong)result[0x6] << 0x08)
+				+ ((ulong)result[0x7] << 0x00);
+			ulong part2 = ((ulong)result[0x8] << 0x38)
+				+ ((ulong)result[0x9] << 0x30)
+				+ ((ulong)result[0xA] << 0x28)
+				+ ((ulong)result[0xB] << 0x20)
+				+ ((ulong)result[0xC] << 0x18)
+				+ ((ulong)result[0xD] << 0x10)
+				+ ((ulong)result[0xE] << 0x08)
+				+ ((ulong)result[0xF] << 0x00);
+			string appendix1 = ((part1 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length); // Some tricks are required to divide by ulong.MaxValue + 1
+			string appendix2 = ((part2 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length);
+			string latStr = (int)position.Latitude + "." + appendix1;
+			string lonStr = (int)position.Longitude + "." + appendix2;
+			double latitude = Convert.ToDouble(latStr, CultureInfo.InvariantCulture);
+			double longitude = Convert.ToDouble(lonStr, CultureInfo.InvariantCulture);
 
-			Regex rLon = new Regex("\"lon\": (-?[0-9.]*)");
-			Match mLon = rLon.Match(html);
-			Group gLon = mLon.Groups[1];
-			string sLon = gLon.Value;
-			double lon = Double.Parse(sLon, CultureInfo.InvariantCulture);
-
-			return new Geohash(new GeoCoordinate(lat, lon));
-		}
-	}
-
-	public class NoGeohashException : Exception
-	{
-		public enum NoGeohashCause { NoInternet, NoDjia, UnknownConnectionError, Unknown }
-
-		public NoGeohashCause Cause { get; private set; }
-
-		public NoGeohashException() : base() { }
-		public NoGeohashException(string message)
-			: base(message)
-		{
-			if (message.Contains("DJIA for") && message.Contains("not available yet"))
-				Cause = NoGeohashCause.NoDjia;
-		}
-		public NoGeohashException(NoGeohashCause cause)
-		{
-			Cause = cause;
-		}
-		public NoGeohashException(string message, Exception innerException)
-			: base(message, innerException)
-		{
-			if (message.Contains("DJIA for") && message.Contains("not available yet"))
-				Cause = NoGeohashCause.NoDjia;
+			return new Geohash(date, new GeoCoordinate(latitude, longitude));
 		}
 	}
 
