@@ -16,13 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using Microsoft.Phone.Controls;
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Collections.Generic;
-using System.Windows.Data;
-using System.IO.IsolatedStorage;
 using Microsoft.Phone.Maps.Controls;
+using System;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Geohashing
 {
@@ -33,6 +30,16 @@ namespace Geohashing
 			InitializeComponent();
 
 			cartographicModeListPicker.ItemsSource = Enum.GetValues(typeof(MapCartographicMode));
+		}
+
+		private void DjiaBufferSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			TextBox t = (TextBox)sender;
+			if (t.Text.Contains(".") || t.Text.Contains(","))
+			{
+				t.Text = t.Text.Replace(".", "").Replace(",", "");
+				t.SelectionStart = t.Text.Length;
+			}
 		}
 	}
 	public class CartographicModeIntConverter : IValueConverter

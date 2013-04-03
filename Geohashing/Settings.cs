@@ -20,14 +20,19 @@ namespace Geohashing
 		private const string localizeSettingName="Localize";
 		private const string autoZoomSettingName = "AutoZoom";
 		private const string cartographicModeSettingName="CartographicMode";
+		private const string djiaBufferSizeSettingName = "DjiaBufferSize";
 
 		private const bool localizeSettingDefault=true;
 		private const bool autoZoomSettingDefault = true;
 		private const MapCartographicMode cartographicModeSettingDefault=MapCartographicMode.Road;
+		private const int djiaBufferSizeSettingDefault = 7;
+
+		public const int SettingsCount = 4;
 
 		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
 		public static event EventHandler<SettingChangedEventArgs> CartographicModeChanged;
+		public static event EventHandler<SettingChangedEventArgs> DjiaBufferSizeChanged;
 
 		private IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
@@ -81,6 +86,24 @@ namespace Geohashing
 					Save();
 					if (CartographicModeChanged != null)
 						CartographicModeChanged(oldValue, new SettingChangedEventArgs(cartographicModeSettingName));
+				}
+			}
+		}
+
+		public int DjiaBufferSize
+		{
+			get
+			{
+				return GetValueOrDefault(djiaBufferSizeSettingName, djiaBufferSizeSettingDefault);
+			}
+			set
+			{
+				int oldValue = GetValueOrDefault(djiaBufferSizeSettingName, djiaBufferSizeSettingDefault);
+				if (AddOrUpdateValue(djiaBufferSizeSettingName, value))
+				{
+					Save();
+					if (DjiaBufferSizeChanged != null)
+						DjiaBufferSizeChanged(oldValue, new SettingChangedEventArgs(djiaBufferSizeSettingName));
 				}
 			}
 		}
