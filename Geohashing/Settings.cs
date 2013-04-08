@@ -15,24 +15,35 @@ namespace Geohashing
 		High
 	}
 
+	public enum GeohashMode
+	{
+		[Description("Nearest")]
+		Nearest,
+		[Description("Current graticule")]
+		CurrentGraticule
+	}
+
 	public class Settings
 	{
 		private const string localizeSettingName="Localize";
 		private const string autoZoomSettingName = "AutoZoom";
 		private const string cartographicModeSettingName="CartographicMode";
 		private const string djiaBufferSizeSettingName = "DjiaBufferSize";
+		private const string geohashModeSettingName = "GeohashMode";
 
 		private const bool localizeSettingDefault=true;
 		private const bool autoZoomSettingDefault = true;
 		private const MapCartographicMode cartographicModeSettingDefault=MapCartographicMode.Road;
 		private const int djiaBufferSizeSettingDefault = 7;
+		private const GeohashMode geohashModeSettingDefault = GeohashMode.CurrentGraticule;
 
-		public const int SettingsCount = 4;
+		public const int SettingsCount = 5;
 
 		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
 		public static event EventHandler<SettingChangedEventArgs> CartographicModeChanged;
 		public static event EventHandler<SettingChangedEventArgs> DjiaBufferSizeChanged;
+		public static event EventHandler<SettingChangedEventArgs> GeohashModeChanged;
 
 		private IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
@@ -104,6 +115,24 @@ namespace Geohashing
 					Save();
 					if (DjiaBufferSizeChanged != null)
 						DjiaBufferSizeChanged(oldValue, new SettingChangedEventArgs(djiaBufferSizeSettingName));
+				}
+			}
+		}
+
+		public GeohashMode HashMode
+		{
+			get
+			{
+				return GetValueOrDefault(geohashModeSettingName, geohashModeSettingDefault);
+			}
+			set
+			{
+				GeohashMode oldValue = GetValueOrDefault(geohashModeSettingName, geohashModeSettingDefault);
+				if (AddOrUpdateValue(geohashModeSettingName, value))
+				{
+					Save();
+					if (GeohashModeChanged != null)
+						GeohashModeChanged(oldValue, new SettingChangedEventArgs(geohashModeSettingName));
 				}
 			}
 		}

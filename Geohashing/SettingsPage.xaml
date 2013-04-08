@@ -34,6 +34,7 @@
 
 	<phone:PhoneApplicationPage.Resources>
 		<local:CartographicModeIntConverter x:Name="cartographicModeIntConverter"/>
+		<local:GeohashModeIntConverter x:Name="geohashModeIntConverter"/>
 	</phone:PhoneApplicationPage.Resources>
 
 	<Grid Background="Transparent">
@@ -54,6 +55,8 @@
 			<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource cartographicModeIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 			<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
 			<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
+			<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
+			<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource geohashModeIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 		</StackPanel>
 	</Grid>
 

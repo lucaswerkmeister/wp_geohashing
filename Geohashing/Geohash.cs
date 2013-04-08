@@ -70,7 +70,7 @@ namespace Geohashing
 
 		private Geohash(DateTime date, GeoCoordinate position)
 		{
-			this.date=date;
+			this.date = date;
 			this.position = position;
 		}
 
@@ -92,11 +92,40 @@ namespace Geohashing
 			return await Get((await geolocator.GetGeopositionAsync()).Coordinate.Convert(), date);
 		}
 
-		public static async Task<Geohash> Get(GeoCoordinate position, DateTime date)
+		public static async Task<Geohash> Get(GeoCoordinate position, DateTime date, GeohashMode geohashMode = GeohashMode.CurrentGraticule)
 		{
-			bool use30wRule = date.CompareTo(Rule30WValidityStart) >= 0 && position.Longitude > -30;
+			int[] deltas = geohashMode == GeohashMode.CurrentGraticule ? new[] { 0 } : new[] { -1, 0, 1 };
 
-			string djia = await Djia.Get(use30wRule ? date.Subtract(TimeSpan.FromDays(1)) : date);
+			GeoCoordinate nearestHash = position; // Will get overwritten anyways,
+			double distance = Double.MaxValue;    // because of this
+			foreach (int dx in deltas)
+				foreach (int dy in deltas)
+				{
+					GeoCoordinate newCoordinate = new GeoCoordinate(position.Latitude - dx, position.Longitude - dy);
+					string[] appendices = calculateAppendices(date, await Djia.Get(convertDate30W(date, newCoordinate)));
+					string latStr = (int)newCoordinate.Latitude + "." + appendices[0];
+					string lonStr = (int)newCoordinate.Longitude + "." + appendices[1];
+					double latitude = Convert.ToDouble(latStr, CultureInfo.InvariantCulture);
+					double longitude = Convert.ToDouble(lonStr, CultureInfo.InvariantCulture);
+					GeoCoordinate newHash = new GeoCoordinate(latitude, longitude);
+					double newDistance = position.GetDistanceTo(newHash);
+					if (newDistance < distance)
+					{
+						nearestHash = newHash;
+						distance = newDistance;
+					}
+				}
+
+			return new Geohash(date, nearestHash);
+		}
+
+		private static DateTime convertDate30W(DateTime date, GeoCoordinate position)
+		{
+			return position.Longitude > -30 && date.CompareTo(Rule30WValidityStart) >= 0 ? date.Subtract(TimeSpan.FromDays(1)) : date;
+		}
+
+		private static string[] calculateAppendices(DateTime date, string djia)
+		{
 			string dateString = date.ToString("yyyy-MM-dd");
 			byte[] hashInput = Encoding.UTF8.GetBytes(dateString + '-' + djia);
 			IDigest digest = new MD5Digest();
@@ -122,12 +151,8 @@ namespace Geohashing
 				+ ((ulong)result[0xF] << 0x00);
 			string appendix1 = ((part1 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length); // Some tricks are required to divide by ulong.MaxValue + 1
 			string appendix2 = ((part2 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length);
-			string latStr = (int)position.Latitude + "." + appendix1;
-			string lonStr = (int)position.Longitude + "." + appendix2;
-			double latitude = Convert.ToDouble(latStr, CultureInfo.InvariantCulture);
-			double longitude = Convert.ToDouble(lonStr, CultureInfo.InvariantCulture);
 
-			return new Geohash(date, new GeoCoordinate(latitude, longitude));
+			return new[] { appendix1, appendix2 };
 		}
 	}
 

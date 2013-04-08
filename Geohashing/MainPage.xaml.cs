@@ -42,6 +42,7 @@ namespace Geohashing
 			set;
 		}
 		private Settings settings { get { return (Settings)App.Current.Resources["settings"]; } }
+		private Settings threadSafeSettings { get { return new Settings(); } }
 
 		private GeoCoordinate lastMapHold;
 
@@ -55,6 +56,7 @@ namespace Geohashing
 			map.Layers.Add(currentLocationLayer);
 			map.CartographicMode = settings.CartographicMode;
 			Settings.CartographicModeChanged += (sender, e) => Dispatcher.BeginInvoke(() => map.CartographicMode = settings.CartographicMode);
+			Settings.GeohashModeChanged += (sender, e) => PointMapToCurrentGeohash();
 
 			if (settings.Localize)
 				new Thread(() =>
@@ -184,7 +186,7 @@ namespace Geohashing
 
 		public async Task<bool> LoadGeohash(GeoCoordinate position, DateTime date)
 		{
-			geohash = await Geohash.Get(position, date);
+			geohash = await Geohash.Get(position, date, threadSafeSettings.HashMode);
 
 			redrawGeohashPin();
 			redrawGraticuleOutline();
@@ -220,7 +222,8 @@ namespace Geohashing
 		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			coordinate = lastMapHold;
-			LoadGeohash(lastMapHold, Date);
+			redrawLocationPin();
+			PointMapToCurrentGeohash();
 		}
 
 		private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)

@@ -40,7 +40,7 @@
 
 		<StackPanel Grid.Row="0" Margin="12,17,0,28">
 			<TextBlock Text="Geohashing" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-			<TextBlock Text="Today's hash" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+			<TextBlock Text="Current hash" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
 		<Grid Grid.Row="1" Margin="12,0,12,0">
@@ -56,7 +56,7 @@
 			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Hold="map_Hold">
 				<toolkit:ContextMenuService.ContextMenu>
 					<toolkit:ContextMenu>
-						<toolkit:MenuItem Header="Use this graticule" Tap="changeGraticule"/>
+						<toolkit:MenuItem Header="Change location" Tap="changeGraticule"/>
 					</toolkit:ContextMenu>
 				</toolkit:ContextMenuService.ContextMenu>
 			</maps:Map>
