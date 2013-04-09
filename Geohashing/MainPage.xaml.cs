@@ -220,16 +220,11 @@ namespace Geohashing
 			}.Show();
 		}
 
-		private void changeGraticule(object sender, System.Windows.Input.GestureEventArgs e)
-		{
-			coordinate = lastMapHold;
-			redrawLocationPin();
-			PointMapToCurrentGeohash();
-		}
-
 		private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
 		{
-			lastMapHold = map.ConvertViewportPointToGeoCoordinate(e.GetPosition(map));
+			coordinate = map.ConvertViewportPointToGeoCoordinate(e.GetPosition(map));
+			redrawLocationPin();
+			PointMapToCurrentGeohash();
 		}
 
 		private void dateChanged(object sender, EventArgs e)
