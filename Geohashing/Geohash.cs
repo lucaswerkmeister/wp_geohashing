@@ -31,7 +31,7 @@ namespace Geohashing
 {
 	public class Geohash
 	{
-		private static readonly DateTime Rule30WValidityStart = DateTime.Parse("2008-05-27");
+		private static readonly DateTime Rule30WValidityStart = DateTime.Parse("2008-05-27", CultureInfo.InvariantCulture);
 
 		private readonly DateTime date;
 		private readonly GeoCoordinate position;
@@ -124,7 +124,7 @@ namespace Geohashing
 
 		private static string[] calculateAppendices(DateTime date, string djia)
 		{
-			string dateString = date.ToString("yyyy-MM-dd");
+			string dateString = date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 			string fullString = dateString + '-' + djia;
 			byte[] result = MD5.Digest(fullString);
 
@@ -144,8 +144,8 @@ namespace Geohashing
 				+ ((ulong)result[0xD] << 0x10)
 				+ ((ulong)result[0xE] << 0x08)
 				+ ((ulong)result[0xF] << 0x00);
-			string appendix1 = ((part1 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length); // Some tricks are required to divide by ulong.MaxValue + 1
-			string appendix2 = ((part2 / 2.0) / (long.MaxValue + (ulong)1)).ToString().Substring("0.".Length);
+			string appendix1 = ((part1 / 2.0) / (long.MaxValue + (ulong)1)).ToString(CultureInfo.InvariantCulture).Substring("0.".Length); // Some tricks are required to divide by ulong.MaxValue + 1
+			string appendix2 = ((part2 / 2.0) / (long.MaxValue + (ulong)1)).ToString(CultureInfo.InvariantCulture).Substring("0.".Length);
 
 			return new[] { appendix1, appendix2 };
 		}

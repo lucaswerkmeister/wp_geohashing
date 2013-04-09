@@ -4,6 +4,8 @@
 		<Recognized>
 			<Word>Geohash</Word>
 			<Word>Geohashing</Word>
+			<Word>Djia</Word>
+			<Word>Graticule</Word>
 		</Recognized>
 	</Words>
 </Dictionary>

@@ -63,15 +63,15 @@ namespace Geohashing
 		public NoDjiaException(string message)
 			: base(message)
 		{
-			if (message.Contains("error"))
+			if(String.IsNullOrEmpty(message))
+				Cause = NoDjiaCause.NoInternet;
+			else if (message.Contains("error"))
 			{
 				if (message.Contains("date format error"))
 					Cause = NoDjiaCause.DateFormat;
 				else if (message.Contains("not available"))
 					Cause = NoDjiaCause.NotAvailable;
 			}
-			else if (message.Length == 0)
-				Cause = NoDjiaCause.NoInternet;
 			else
 				Cause = NoDjiaCause.Unknown;
 		}

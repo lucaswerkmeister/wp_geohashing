@@ -21,6 +21,7 @@ using Microsoft.Phone.Maps.Toolkit;
 using Microsoft.Phone.Tasks;
 using System;
 using System.Device.Location;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,7 +81,7 @@ namespace Geohashing
 			{
 				progressText.Text = message;
 				progressBar.Visibility = Visibility.Collapsed;
-				progressText.Visibility = message == String.Empty ? Visibility.Collapsed : Visibility.Visible;
+				progressText.Visibility = String.IsNullOrEmpty(message) ? Visibility.Collapsed : Visibility.Visible;
 			});
 		}
 
@@ -215,7 +216,7 @@ namespace Geohashing
 		{
 			new MapsDirectionsTask
 			{
-				End = new LabeledMapLocation("Geohash for " + Date.ToString("yyyy-MM-dd") + ' ' + geohash.Graticule.North + ", " + geohash.Graticule.West, geohash.Position)
+				End = new LabeledMapLocation("Geohash for " + Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ' ' + geohash.Graticule.North + ", " + geohash.Graticule.West, geohash.Position)
 			}.Show();
 		}
 
@@ -242,6 +243,9 @@ namespace Geohashing
 
 		public static GeoCoordinateCollection CreateRectangle(LocationRectangle rect)
 		{
+			if (rect == null)
+				throw new ArgumentNullException("rect");
+
 			GeoCoordinateCollection ret = new GeoCoordinateCollection();
 
 			ret.Add(rect.Northwest);

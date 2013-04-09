@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Geohashing
 {
@@ -37,7 +36,7 @@ namespace Geohashing
 				string expectedResult = pair.Value;
 				string actualResult = byteArrayToString(Digest(input));
 				if (expectedResult != actualResult)
-					throw new Exception("Test failed for input \"" + input + "\"!");
+					throw new InvalidProgramException("MD5 test failed for input \"" + input + "\"!");
 			}
 		}
 
@@ -45,7 +44,7 @@ namespace Geohashing
 		{
 			StringBuilder ret = new StringBuilder();
 			foreach (byte b in array)
-				ret.Append(b.ToString("x2"));
+				ret.Append(b.ToString("x2", CultureInfo.CurrentCulture));
 			return ret.ToString();
 		}
 
