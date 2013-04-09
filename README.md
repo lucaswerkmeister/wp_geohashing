@@ -3,9 +3,10 @@ A Geohashing app for the Windows Phone.
 Features
 ========
 * On startup, your location and the according Geohash is loaded.
-* You can change the graticule by tapping and holding anywhere on the map, and choosing "Use this graticule" on the context menu.
+* You can change the graticule by tapping and holding anywhere on the map, and choosing "Change location" on the context menu.
 * You can change the date using the DatePicker at the bottom.
 * You can send the location to the Maps app for navigation instructions.
+* You can choose between seeing the geohash for your current graticule and the geohash that is nearest to you.
 * You can change the map mode in the settings.
 
 Installation
@@ -28,13 +29,8 @@ You can contribute by:
 Planned features
 ================
 Most of these are inspired (which is a fancy word for "copied") from the Android app:
-* Pin graticules to start screen
-* Search for nearest geohash:
-   1. Calculate the current geohash.
-   2. For every graticule that intersects a circle around the current location of radius (distance to geohash), calculate the geohash.
-   3. Each time a geohash is nearer than the current geohash, narrow the circle accordingly.
-   *  Near the poles, this will check more and more graticules; without a DJIA cache, the performance would be inacceptably slow.
-* Infobox
+* Pin locations to start screen
+* Infobox?
    * Coordinates
       * Settings: Deg/Min/Sec
    * Distance to target
