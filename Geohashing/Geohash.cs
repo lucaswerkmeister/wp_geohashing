@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using Microsoft.Phone.Maps.Controls;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Digests;
 using System;
 using System.Collections.Generic;
 using System.Device.Location;
@@ -127,11 +125,8 @@ namespace Geohashing
 		private static string[] calculateAppendices(DateTime date, string djia)
 		{
 			string dateString = date.ToString("yyyy-MM-dd");
-			byte[] hashInput = Encoding.UTF8.GetBytes(dateString + '-' + djia);
-			IDigest digest = new MD5Digest();
-			digest.BlockUpdate(hashInput, 0, hashInput.Length);
-			byte[] result = new byte[16];
-			digest.DoFinal(result, 0);
+			string fullString = dateString + '-' + djia;
+			byte[] result = MD5.Digest(fullString);
 
 			ulong part1 = ((ulong)result[0x0] << 0x38)
 				+ ((ulong)result[0x1] << 0x30)

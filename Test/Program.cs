@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Geohashing
@@ -12,8 +13,7 @@ namespace Geohashing
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("abc".MyToString());
-			Console.WriteLine(((string)null).MyToString());
+			new Thread(() => MD5.Digest("message digest")).Start();
 		}
 
 		public static string MyToString(this object obj)

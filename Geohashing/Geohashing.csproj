@@ -95,14 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BouncyCastle\GeneralDigest.cs" />
-    <Compile Include="BouncyCastle\IDigest.cs" />
-    <Compile Include="BouncyCastle\MD5Digest.cs" />
     <Compile Include="Djia.cs" />
     <Compile Include="Geohash.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -159,7 +157,6 @@
     <Content Include="Images\feature.settings.png" />
     <Content Include="Images\next.png" />
     <Content Include="Images\refresh.png" />
-    <Content Include="BouncyCastleLicense.html" />
     <Content Include="license.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
