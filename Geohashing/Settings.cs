@@ -37,8 +37,6 @@ namespace Geohashing
 		private const int djiaBufferSizeSettingDefault = 7;
 		private const GeohashMode geohashModeSettingDefault = GeohashMode.CurrentGraticule;
 
-		public const int SettingsCount = 5;
-
 		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
 		public static event EventHandler<SettingChangedEventArgs> CartographicModeChanged;

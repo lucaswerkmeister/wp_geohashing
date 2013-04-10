@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,16 +17,19 @@ namespace Geohashing
 
 		public static async Task<string> Get(DateTime date)
 		{
-			string key = settingPrefix + date.ToString("yyyy-MM-dd");
+			string key = settingPrefix + date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
 			if (!settings.Contains(key))
 			{
-				while (settings.Keys.Count - Settings.SettingsCount > appSettings.DjiaBufferSize)
+				IEnumerable<string> djiaKeys = (from string setting in settings.Keys
+												where setting.StartsWith(settingPrefix)
+												select setting);
+
+				while (djiaKeys.Count() > appSettings.DjiaBufferSize)
 				{
 					// Delete the oldest value
 					List<string> dates = new List<string>();
-					foreach (string oldKey in settings.Keys)
-						if (oldKey.StartsWith(settingPrefix))
-							dates.Add(oldKey.Substring(settingPrefix.Length));
+					foreach (string oldKey in djiaKeys)
+						dates.Add(oldKey.Substring(settingPrefix.Length));
 					dates.Sort();
 					settings.Remove(settingPrefix + dates[0]);
 				}
@@ -33,6 +38,7 @@ namespace Geohashing
 					return djia; // Don't save
 				settings[key] = djia;
 				settings.Save();
+				return djia; // No point in wasting time in the lookup below when we already have the value
 			}
 			return (string)settings[key];
 		}
@@ -63,7 +69,7 @@ namespace Geohashing
 		public NoDjiaException(string message)
 			: base(message)
 		{
-			if(String.IsNullOrEmpty(message))
+			if (String.IsNullOrEmpty(message))
 				Cause = NoDjiaCause.NoInternet;
 			else if (message.Contains("error"))
 			{
