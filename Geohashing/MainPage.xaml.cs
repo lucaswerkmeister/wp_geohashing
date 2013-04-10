@@ -18,6 +18,7 @@
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
 using System.Device.Location;
@@ -63,6 +64,17 @@ namespace Geohashing
 				new Thread(() =>
 					UpdateCurrentLocation()
 					).Start(); // Apparently, doing this from the constructor thread isn't allowed (Dispatcher neither)
+		}
+
+		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			if (NavigationContext.QueryString.ContainsKey("lat") && NavigationContext.QueryString.ContainsKey("lon"))
+			{
+				coordinate = new GeoCoordinate(Double.Parse(NavigationContext.QueryString["lat"]), Double.Parse(NavigationContext.QueryString["lon"]));
+				redrawLocationPin();
+				PointMapToCurrentGeohash();
+			}
 		}
 
 		#region UI utility methods safe to call from any thread
@@ -210,6 +222,19 @@ namespace Geohashing
 		private void Settings_Click(object sender, EventArgs e)
 		{
 			NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+		}
+
+		private void Pin_Click(object sender, EventArgs e)
+		{
+			FlipTileData tile = new FlipTileData
+			{
+				Title = "Geohash: " + coordinate.Latitude.ToString("F2", CultureInfo.CurrentCulture) + ", " + coordinate.Longitude.ToString("F2", CultureInfo.CurrentCulture),
+				//BackBackgroundImage = new Uri("TODO"),
+				BackTitle = Title,
+				BackContent = "Geohash is at " + geohash.Position.Latitude.ToString("F2", CultureInfo.CurrentCulture) + ", " + geohash.Position.Longitude.ToString("F2", CultureInfo.CurrentCulture) + "\n"
+					+ "Distance: " + ((int)geohash.Position.GetDistanceTo(coordinate)).ToString("D", CultureInfo.CurrentCulture) + "m"
+			};
+			ShellTile.Create(new Uri("/MainPage.xaml?lat=" + coordinate.Latitude + "&lon=" + coordinate.Longitude, UriKind.Relative), tile, false);
 		}
 
 		private void Goto_Click(object sender, EventArgs e)

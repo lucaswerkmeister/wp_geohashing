@@ -153,6 +153,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <Content Include="Images\favs.png" />
     <Content Include="Images\feature.search.png" />
     <Content Include="Images\feature.settings.png" />
     <Content Include="Images\next.png" />
