@@ -66,10 +66,31 @@ namespace Geohashing
 			}
 		}
 
+		public DateTime Date
+		{
+			get
+			{
+				return date.Date;
+			}
+		}
+
 		private Geohash(DateTime date, GeoCoordinate position)
 		{
 			this.date = date;
 			this.position = position;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Geohash))
+				return false;
+			Geohash other = (Geohash)obj;
+			return other.Position.Equals(Position) && other.Date.Equals(Date);
+		}
+
+		public override int GetHashCode()
+		{
+			return Position.GetHashCode() ^ Date.GetHashCode();
 		}
 
 		public static async Task<Geohash> Get()
