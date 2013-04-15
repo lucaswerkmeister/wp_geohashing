@@ -48,9 +48,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Geohashing\Geohashing.csproj">
-      <Project>{2d465ad8-6c86-488d-ae1b-fcf8eac281c0}</Project>
-      <Name>Geohashing</Name>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{d562ccd3-191b-4a5e-9151-23bfc89e7d83}</Project>
+      <Name>Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
@@ -61,6 +62,8 @@ namespace Geohashing
 		// This code will not execute when the application is reactivated
 		private void Application_Launching(object sender, LaunchingEventArgs e)
 		{
+			if (!ShellTile.ActiveTiles.Any((existing) => existing.NavigationUri.ToString().Contains('?')))
+				Tiles.RemoveUpdater();
 		}
 
 		// Code to execute when the application is activated (brought to foreground)

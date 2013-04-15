@@ -18,6 +18,7 @@
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
@@ -214,22 +215,6 @@ namespace Geohashing
 			return true;
 		}
 
-		public void UpdateTiles()
-		{
-			IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
-			if (!store.DirectoryExists("/Shared/ShellContent"))
-				store.CreateDirectory("/Shared/ShellContent");
-			foreach (ShellTile tile in ShellTile.ActiveTiles)
-				if (tile.NavigationUri.ToString().Contains("?")) // exclude the primary tile
-					updateTile(tile);
-			foreach (string file in store.GetFileNames("/Shared/ShellContent/*")
-				.Where((fileName) =>
-					DateTime.Now.Date.Subtract(TimeSpan.FromDays(3)).CompareTo(
-					DateTime.Parse(fileName.Substring(0, "yyyy-MM-dd".Length), CultureInfo.InvariantCulture))
-					>= 0))
-				store.DeleteFile("/Shared/ShellContent/" + file); // Delete all tile images older than 3 days
-		}
-
 		private void Reload_Click(object sender, EventArgs e)
 		{
 			PointMapToCurrentGeohash();
@@ -247,21 +232,7 @@ namespace Geohashing
 
 		private void Pin_Click(object sender, EventArgs e)
 		{
-			Uri uri = new Uri("/MainPage.xaml"
-				+ "?lat=" + coordinate.Latitude
-				+ "&lon=" + coordinate.Longitude
-				+ "&hashmode=" + settings.HashMode.ToString()
-				+ "&mapmode=" + settings.CartographicMode.ToString()
-				, UriKind.Relative);
-			createOrUpdateTile(uri);
-		}
-
-		private async void createOrUpdateTile(Uri uri)
-		{
-			if (!ShellTile.ActiveTiles.Any((existing) => existing.NavigationUri.Equals(uri)))
-				ShellTile.Create(uri, await createTileData(uri), false);
-			else
-				ShellTile.ActiveTiles.First((existing) => existing.NavigationUri.Equals(uri)).Update(await createTileData(uri));
+			Tiles.CreateOrUpdate(coordinate.Latitude, coordinate.Longitude, settings.HashMode, settings.CartographicMode);
 		}
 
 		private void Goto_Click(object sender, EventArgs e)
@@ -286,82 +257,6 @@ namespace Geohashing
 			Date = value == null ? DateTime.Now : (DateTime)value;
 			if (Date.Date != oldValue.Date)
 				PointMapToCurrentGeohash();
-		}
-
-		private async Task<FlipTileData> createTileData(Uri tileUri)
-		{
-			string query = tileUri.ToString().Substring(tileUri.ToString().IndexOf('?') + 1);
-			string[] parts = query.Split('&');
-			string key = "";
-			IEnumerable<string> filter = from part in parts
-										 where part.Split('=')[0] == key
-										 select part.Split('=')[1];
-			key = "lat";
-			double lat = Double.Parse(filter.First());
-			key = "lon";
-			double lon = Double.Parse(filter.First());
-			key = "mapmode";
-			MapCartographicMode mapmode = (MapCartographicMode)Enum.Parse(typeof(MapCartographicMode), filter.DefaultIfEmpty(MapCartographicMode.Road.ToString()).First());
-			key = "hashmode";
-			GeohashMode hashmode = (GeohashMode)Enum.Parse(typeof(GeohashMode), filter.DefaultIfEmpty(GeohashMode.Nearest.ToString()).First());
-
-			string title = "Geohash: " + lat.ToString("F2", CultureInfo.CurrentCulture) + ", " + lon.ToString("F2", CultureInfo.CurrentCulture);
-			GeoCoordinate location = new GeoCoordinate(lat, lon);
-
-			try
-			{
-				Geohash hash = await Geohash.Get(location, DateTime.Now, hashmode);
-
-				const int imgSize = 210;
-
-				string mapModeForRequest = new Dictionary<MapCartographicMode, string>
-				{
-					{MapCartographicMode.Hybrid, "AerialWithLabels"},
-					{MapCartographicMode.Road, "Road"},
-					{MapCartographicMode.Aerial, "Aerial"},
-					{MapCartographicMode.Terrain, "AerialWithLabels"} // not supported by bing maps
-				}[mapmode];
-				string mapRequest = "http://dev.virtualearth.net/REST/v1/Imagery/Map/"
-					+ mapModeForRequest
-					+ "?pushpin=" + location.Latitude.ToString(CultureInfo.InvariantCulture) + "," + location.Longitude.ToString(CultureInfo.InvariantCulture) + ";0" // Icon style 0 is a star similar to the one on the "pin to start" button
-					+ "&pushpin=" + hash.Position.Latitude.ToString(CultureInfo.InvariantCulture) + "," + hash.Position.Longitude.ToString(CultureInfo.InvariantCulture) + ";21" // Icon style 21 is a downwards-pointing arrow inside a speech bubble
-					+ "&mapSize=" + imgSize + "," + imgSize
-					+ "&format=png"
-					+ "&key=" + PrivateResources.BingMapsKey;
-
-				IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
-				string filename = "/Shared/ShellContent/" + hash.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + '-' + location.Latitude.ToString("F2", CultureInfo.InvariantCulture) + "," + location.Longitude.ToString("F2", CultureInfo.InvariantCulture) + "-" + mapModeForRequest + ".png";
-				if (!store.FileExists(filename))
-					using (IsolatedStorageFileStream stream = store.OpenFile(filename, FileMode.OpenOrCreate))
-					{
-						WebRequest request = HttpWebRequest.Create(mapRequest);
-						HttpWebResponse response = await request.GetResponseAsync();
-						Stream responseStream = response.GetResponseStream();
-						responseStream.CopyTo(stream);
-					}
-
-				return new FlipTileData
-				{
-					Title = title,
-					BackgroundImage = new Uri("isostore:" + filename, UriKind.Absolute),
-					BackTitle = title,
-					BackContent = "Geohash is at " + hash.Position.Latitude.ToString("F2", CultureInfo.CurrentCulture) + ", " + hash.Position.Longitude.ToString("F2", CultureInfo.CurrentCulture) + "\n"
-									+ "Distance: " + (hash.Position.GetDistanceTo(location) / 1000).ToString("F2", CultureInfo.CurrentCulture) + "km"
-				};
-			}
-			catch (Exception)
-			{
-				return new FlipTileData
-				{
-					Title = title,
-					BackTitle = title
-				};
-			}
-		}
-
-		private async void updateTile(ShellTile tile)
-		{
-			tile.Update(await createTileData(tile.NavigationUri));
 		}
 
 		public static GeoCoordinateCollection CreateRectangle(LocationRectangle rect)
