@@ -88,8 +88,12 @@ namespace Geohashing
 		{
 			Dispatcher.BeginInvoke(() =>
 			{
-				progressText.Text = description;
-				progressText.Visibility = progressBar.Visibility = Visibility.Visible;
+				SystemTray.SetProgressIndicator(this, new ProgressIndicator
+				{
+					IsVisible = true,
+					IsIndeterminate = true,
+					Text = description
+				});
 			});
 		}
 
@@ -97,9 +101,24 @@ namespace Geohashing
 		{
 			Dispatcher.BeginInvoke(() =>
 			{
-				progressText.Text = message;
-				progressBar.Visibility = Visibility.Collapsed;
-				progressText.Visibility = String.IsNullOrEmpty(message) ? Visibility.Collapsed : Visibility.Visible;
+				bool hasText = !String.IsNullOrWhiteSpace(message);
+				SystemTray.SetProgressIndicator(this, new ProgressIndicator
+				{
+					IsVisible = hasText,
+					IsIndeterminate = false,
+					Text = message,
+					Value = 0
+				});
+				if (hasText)
+					new Thread(() =>
+					{
+						Thread.Sleep(TimeSpan.FromSeconds(5));
+						Dispatcher.BeginInvoke(() =>
+							SystemTray.SetProgressIndicator(this, new ProgressIndicator
+							{
+								IsVisible = false
+							}));
+					}).Start();
 			});
 		}
 
