@@ -59,15 +59,12 @@ namespace Geohashing
 		/// <remarks>
 		/// This method is called when a periodic or resource intensive task is invoked
 		/// </remarks>
-		protected override void OnInvoke(ScheduledTask task)
+		protected override async void OnInvoke(ScheduledTask task)
 		{
-#if DEBUG
-			Debug.WriteLine("Scheduled agent invoked on " + DateTime.Now);
-#endif
 			switch (task.Name)
 			{
 				case "tileUpdater":
-					Tiles.UpdateAll();
+					await Tiles.UpdateAll();
 					break;
 			}
 

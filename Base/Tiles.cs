@@ -32,14 +32,14 @@ namespace Geohashing
 {
 	public static class Tiles
 	{
-		public static void UpdateAll()
+		public static async Task UpdateAll()
 		{
 			IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
 			if (!store.DirectoryExists("/Shared/ShellContent"))
 				store.CreateDirectory("/Shared/ShellContent");
-			foreach (ShellTile tile in ShellTile.ActiveTiles)
-				if (tile.NavigationUri.ToString().Contains("?")) // exclude the primary tile
-					updateTile(tile);
+			await Task.WhenAll(ShellTile.ActiveTiles
+				.Where((tile) => tile.NavigationUri.ToString().Contains("?")) // exclude the primary tile
+				.Select(tile => updateTile(tile)));
 			foreach (string file in store.GetFileNames("/Shared/ShellContent/*")
 				.Where((fileName) =>
 					DateTime.Now.Date.Subtract(TimeSpan.FromDays(3)).CompareTo(
@@ -149,7 +149,7 @@ namespace Geohashing
 			}
 		}
 
-		private static async void updateTile(ShellTile tile)
+		private static async Task updateTile(ShellTile tile)
 		{
 			tile.Update(await createTileData(tile.NavigationUri));
 		}
