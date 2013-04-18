@@ -32,6 +32,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Windows.Devices.Geolocation;
 
@@ -62,12 +63,7 @@ namespace Geohashing
 			map.Layers.Add(currentLocationLayer);
 			map.CartographicMode = settings.CartographicMode;
 			Settings.CartographicModeChanged += (sender, e) => Dispatcher.BeginInvoke(() => map.CartographicMode = settings.CartographicMode);
-			Settings.GeohashModeChanged += (sender, e) => PointMapToCurrentGeohash();
-
-			if (settings.Localize)
-				new Thread(() =>
-					UpdateCurrentLocation()
-					).Start(); // Apparently, doing this from the constructor thread isn't allowed (Dispatcher neither)
+			Settings.GeohashModeChanged += async (sender, e) => await PointMapToCurrentGeohash();
 		}
 
 		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -78,8 +74,17 @@ namespace Geohashing
 				coordinate = new GeoCoordinate(Double.Parse(NavigationContext.QueryString["lat"]), Double.Parse(NavigationContext.QueryString["lon"]));
 				if (NavigationContext.QueryString.ContainsKey("mode"))
 					settings.CartographicMode = (MapCartographicMode)Enum.Parse(typeof(MapCartographicMode), NavigationContext.QueryString["mode"]);
+			}
+		}
+
+		private async void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			if (coordinate == null && settings.Localize)
+				await UpdateCurrentLocation();
+			if (coordinate != null)
+			{
 				redrawLocationPin();
-				PointMapToCurrentGeohash();
+				await PointMapToCurrentGeohash();
 			}
 		}
 
@@ -165,6 +170,15 @@ namespace Geohashing
 				map.MapElements.Add(graticulePolygon);
 			});
 		}
+		private void updateInfoLayer()
+		{
+			Dispatcher.BeginInvoke(() =>
+			{
+				info.Text = "Position: " + coordinate.Latitude.ToString("F3", CultureInfo.CurrentCulture) + ", " + coordinate.Longitude.ToString("F3", CultureInfo.CurrentCulture) + "\n"
+							+ "Geohash: " + geohash.Position.Latitude.ToString("F3", CultureInfo.CurrentCulture) + ", " + geohash.Position.Longitude.ToString("F3", CultureInfo.CurrentCulture) + "\n"
+							+ "Distance: " + (geohash.Position.GetDistanceTo(coordinate) / 1000).ToString("F2") + "km";
+			});
+		}
 
 		private void focus()
 		{
@@ -176,7 +190,7 @@ namespace Geohashing
 		}
 		#endregion
 
-		public async void UpdateCurrentLocation()
+		public async Task UpdateCurrentLocation()
 		{
 			startTask("Getting location...");
 
@@ -187,7 +201,7 @@ namespace Geohashing
 
 				endTask();
 
-				PointMapToCurrentGeohash();
+				await PointMapToCurrentGeohash();
 			}
 			catch (Exception)
 			{
@@ -195,7 +209,7 @@ namespace Geohashing
 			}
 		}
 
-		public async void PointMapToCurrentGeohash()
+		public async Task PointMapToCurrentGeohash()
 		{
 			if (coordinate == null)
 				return;
@@ -222,26 +236,24 @@ namespace Geohashing
 			}
 		}
 
-		public async Task<bool> LoadGeohash(GeoCoordinate position, DateTime date)
+		public async Task LoadGeohash(GeoCoordinate position, DateTime date)
 		{
 			geohash = await Geohash.Get(position, date, threadSafeSettings.HashMode);
 
 			redrawGeohashPin();
 			redrawGraticuleOutline();
-
+			updateInfoLayer();
 			focus();
-
-			return true;
 		}
 
-		private void Reload_Click(object sender, EventArgs e)
+		private async void Reload_Click(object sender, EventArgs e)
 		{
-			PointMapToCurrentGeohash();
+			await PointMapToCurrentGeohash();
 		}
 
-		private void Relocate_Click(object sender, EventArgs e)
+		private async void Relocate_Click(object sender, EventArgs e)
 		{
-			UpdateCurrentLocation();
+			await UpdateCurrentLocation();
 		}
 
 		private void Settings_Click(object sender, EventArgs e)
@@ -262,20 +274,20 @@ namespace Geohashing
 			}.Show();
 		}
 
-		private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+		private async void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
 		{
 			coordinate = map.ConvertViewportPointToGeoCoordinate(e.GetPosition(map));
 			redrawLocationPin();
-			PointMapToCurrentGeohash();
+			await PointMapToCurrentGeohash();
 		}
 
-		private void dateChanged(object sender, EventArgs e)
+		private async void dateChanged(object sender, EventArgs e)
 		{
 			DateTime oldValue = Date;
 			DateTime? value = datePicker.Value;
 			Date = value == null ? DateTime.Now : (DateTime)value;
 			if (Date.Date != oldValue.Date)
-				PointMapToCurrentGeohash();
+				await PointMapToCurrentGeohash();
 		}
 
 		public static GeoCoordinateCollection CreateRectangle(LocationRectangle rect)

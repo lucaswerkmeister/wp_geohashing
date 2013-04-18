@@ -30,7 +30,7 @@
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait" Orientation="Portrait"
-	shell:SystemTray.IsVisible="True">
+	shell:SystemTray.IsVisible="True" Loaded="OnLoaded">
 
 	<Grid Background="Transparent">
 		<Grid.RowDefinitions>
@@ -53,6 +53,9 @@
 
 			<maps:Map x:Name="map" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Hold="map_Hold"/>
 			<toolkit:DatePicker x:Name="datePicker" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="3" ValueChanged="dateChanged"/>
+			<Border Background="Black" Opacity="0.5" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+				<TextBlock x:Name="info" Foreground="White"/>
+			</Border>
 		</Grid>
 
 	</Grid>
