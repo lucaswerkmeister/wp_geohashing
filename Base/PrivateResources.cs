@@ -12,6 +12,6 @@ namespace Geohashing
 	/// </summary>
 	public static class PrivateResources
 	{
-		public static string BingMapsKey = "";
+		public static string BingMapsKey = "Enter your own key here";
 	}
 }
