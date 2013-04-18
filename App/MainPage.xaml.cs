@@ -64,6 +64,8 @@ namespace Geohashing
 			map.CartographicMode = settings.CartographicMode;
 			Settings.CartographicModeChanged += (sender, e) => Dispatcher.BeginInvoke(() => map.CartographicMode = settings.CartographicMode);
 			Settings.GeohashModeChanged += async (sender, e) => await PointMapToCurrentGeohash();
+			Settings.CoordinatesModeChanged += (sender, e) => updateInfoLayer();
+			Settings.LengthUnitChanged += (sender, e) => updateInfoLayer();
 		}
 
 		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -174,9 +176,9 @@ namespace Geohashing
 		{
 			Dispatcher.BeginInvoke(() =>
 			{
-				info.Text = "Position: " + coordinate.Latitude.ToString("F3", CultureInfo.CurrentCulture) + ", " + coordinate.Longitude.ToString("F3", CultureInfo.CurrentCulture) + "\n"
-							+ "Geohash: " + geohash.Position.Latitude.ToString("F3", CultureInfo.CurrentCulture) + ", " + geohash.Position.Longitude.ToString("F3", CultureInfo.CurrentCulture) + "\n"
-							+ "Distance: " + (geohash.Position.GetDistanceTo(coordinate) / 1000).ToString("F2") + "km";
+				info.Text = "Position: " + settings.CoordinateToString(coordinate) + "\n"
+							+ "Geohash: " + settings.CoordinateToString(geohash.Position) + "\n"
+							+ "Distance: " + settings.LengthToString(coordinate.GetDistanceTo(geohash.Position));
 			});
 		}
 

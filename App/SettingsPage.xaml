@@ -33,8 +33,7 @@
 	shell:SystemTray.IsVisible="True">
 
 	<phone:PhoneApplicationPage.Resources>
-		<local:CartographicModeIntConverter x:Name="cartographicModeIntConverter"/>
-		<local:GeohashModeIntConverter x:Name="geohashModeIntConverter"/>
+		<local:EnumIntConverter x:Name="enumIntConverter"/>
 	</phone:PhoneApplicationPage.Resources>
 
 	<Grid Background="Transparent">
@@ -48,16 +47,22 @@
 			<TextBlock Text="Settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
-		<StackPanel Grid.Row="1" Margin="12,0,12,0">
-			<CheckBox Content="Locate" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
-			<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
-			<TextBlock TextWrapping="Wrap" Text="Map mode"/>
-			<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource cartographicModeIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-			<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
-			<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
-			<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
-			<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource geohashModeIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-		</StackPanel>
+		<ScrollViewer x:Name="scrollViewer" Grid.Row="1" Margin="12,0,12,0">
+			<StackPanel>
+				<CheckBox Content="Locate on app start" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<TextBlock TextWrapping="Wrap" Text="Map mode"/>
+				<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
+				<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
+				<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
+				<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<TextBlock TextWrapping="Wrap" Text="Coordinates mode"/>
+				<toolkit:ListPicker x:Name="coordinatesModeListPicker" SelectedIndex="{Binding CoordinatesMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<TextBlock TextWrapping="Wrap" Text="Lenght units"/>
+				<toolkit:ListPicker x:Name="lengthUnitListPicker" SizeChanged="scrollToLengthUnitListPicker" SelectedIndex="{Binding LengthUnit, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 
 </phone:PhoneApplicationPage>

@@ -130,13 +130,14 @@ namespace Geohashing
 					using (IsolatedStorageFileStream stream = store.OpenFile(filename, FileMode.OpenOrCreate))
 						(await HttpWebRequest.Create(mapRequest).GetResponseAsync()).GetResponseStream().CopyTo(stream);
 
+				Settings settings = new Settings();
 				return new FlipTileData
 				{
 					Title = title,
 					BackgroundImage = new Uri("isostore:" + filename, UriKind.Absolute),
 					BackTitle = title,
-					BackContent = "Geohash is at " + hash.Position.Latitude.ToString("F2", CultureInfo.CurrentCulture) + ", " + hash.Position.Longitude.ToString("F2", CultureInfo.CurrentCulture) + "\n"
-									+ "Distance: " + (hash.Position.GetDistanceTo(location) / 1000).ToString("F2", CultureInfo.CurrentCulture) + "km"
+					BackContent = "Geohash is at " + settings.CoordinateToString(hash.Position) + "\n"
+									+ "Distance: " + settings.LengthToString(hash.Position.GetDistanceTo(location))
 				};
 			}
 			catch (Exception)

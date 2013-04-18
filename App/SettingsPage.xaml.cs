@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -43,6 +44,16 @@ namespace Geohashing
 				values.Add((typeof(GeohashMode).GetMember(e.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
 			geohashModeListPicker.ItemsSource = values;
 			geohashModeListPicker.SelectedItem = (typeof(GeohashMode).GetMember(settings.HashMode.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description;
+
+			rawValues = Enum.GetValues(typeof(CoordinatesDisplay));
+			values = new List<string>();
+			foreach(CoordinatesDisplay e in rawValues)
+				values.Add((typeof(CoordinatesDisplay).GetMember(e.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
+			coordinatesModeListPicker.ItemsSource = values;
+			coordinatesModeListPicker.SelectedItem = (typeof(CoordinatesDisplay).GetMember(settings.CoordinatesMode.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description;
+
+			lengthUnitListPicker.ItemsSource = Enum.GetValues(typeof(UnitSystem));
+			lengthUnitListPicker.SelectedItem = settings.LengthUnit;
 		}
 
 		private void DjiaBufferSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -54,32 +65,42 @@ namespace Geohashing
 				t.SelectionStart = t.Text.Length;
 			}
 		}
+
+		/// <summary>
+		/// Scrolls the page down so that the entire list picker fits into it.
+		/// 
+		/// Code adapted from http://www.telerik.com/community/forums/windows-phone/listpicker/listpicker-expanded-don-t-scroll-correctly.aspx#2318835.
+		/// </summary>
+		/// <param name="sender">Event sender.</param>
+		/// <param name="e">Event args.</param>
+		private void scrollToLengthUnitListPicker(object sender, RoutedEventArgs e)
+		{
+			if (lengthUnitListPicker.ListPickerMode != ListPickerMode.Expanded)
+				return; // page init
+
+			scrollViewer.UpdateLayout();
+
+			double maxScrollPos = scrollViewer.ExtentHeight - scrollViewer.ViewportHeight;
+			double scrollPos = scrollViewer.VerticalOffset - scrollViewer.TransformToVisual(lengthUnitListPicker).Transform(new Point(0, 0)).Y;
+
+			scrollPos = Math.Max(scrollPos, 0);
+			scrollPos = Math.Min(scrollPos, maxScrollPos);
+
+			scrollViewer.ScrollToVerticalOffset(scrollPos);
+		}
 	}
-	public class CartographicModeIntConverter : IValueConverter
+
+	public class EnumIntConverter : IValueConverter
 	{
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return (int)(MapCartographicMode)value;
+			return (int)value;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return Enum.GetValues(typeof(MapCartographicMode)).GetValue((int)value);
+			return Enum.GetValues(targetType).GetValue((int)value);
 		}
 	}
-	public class GeohashModeIntConverter : IValueConverter
-	{
-
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return (int)(GeohashMode)value;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return Enum.GetValues(typeof(GeohashMode)).GetValue((int)value);
-		}
-	}
-
 }
