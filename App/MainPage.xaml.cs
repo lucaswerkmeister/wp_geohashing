@@ -270,6 +270,8 @@ namespace Geohashing
 
 		private void Goto_Click(object sender, EventArgs e)
 		{
+			if(geohash == null)
+				return;
 			new MapsDirectionsTask
 			{
 				End = new LabeledMapLocation("Geohash for " + Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ' ' + geohash.Graticule.North + ", " + geohash.Graticule.West, geohash.Position)
