@@ -151,16 +151,17 @@ namespace Geohashing
 			Dispatcher.BeginInvoke(() =>
 			{
 				geohashLayer.Clear();
-				geohashLayer.Add(new MapOverlay
-				{
-					GeoCoordinate = geohash.Position,
-					Content = new Pushpin
+				if (geohash != null)
+					geohashLayer.Add(new MapOverlay
 					{
 						GeoCoordinate = geohash.Position,
-						Style = (Style)App.Current.Resources["pushpinHash"]
-					},
-					PositionOrigin = new Point(0, 1)
-				});
+						Content = new Pushpin
+						{
+							GeoCoordinate = geohash.Position,
+							Style = (Style)App.Current.Resources["pushpinHash"]
+						},
+						PositionOrigin = new Point(0, 1)
+					});
 			});
 		}
 		private void redrawGraticuleOutline()
@@ -168,15 +169,19 @@ namespace Geohashing
 			Dispatcher.BeginInvoke(() =>
 			{
 				map.MapElements.Remove(graticulePolygon);
-				graticulePolygon.Path = CreateRectangle(geohash.Graticule);
-				map.MapElements.Add(graticulePolygon);
+				if (geohash != null)
+				{
+					graticulePolygon.Path = CreateRectangle(geohash.Graticule);
+					map.MapElements.Add(graticulePolygon);
+				}
 			});
 		}
 		private void updateInfoLayer()
 		{
 			Dispatcher.BeginInvoke(() =>
 			{
-				info.Text = "Position: " + settings.CoordinateToString(coordinate) + "\n"
+				info.Text = geohash == null ? "" :
+							"Position: " + settings.CoordinateToString(coordinate) + "\n"
 							+ "Geohash: " + settings.CoordinateToString(geohash.Position) + "\n"
 							+ "Distance: " + settings.LengthToString(coordinate.GetDistanceTo(geohash.Position));
 			});
@@ -240,12 +245,23 @@ namespace Geohashing
 
 		public async Task LoadGeohash(GeoCoordinate position, DateTime date)
 		{
-			geohash = await Geohash.Get(position, date, threadSafeSettings.HashMode);
+			try
+			{
+				geohash = await Geohash.Get(position, date, threadSafeSettings.HashMode);
 
-			redrawGeohashPin();
-			redrawGraticuleOutline();
-			updateInfoLayer();
-			focus();
+				focus();
+			}
+			catch (NoDjiaException e)
+			{
+				geohash = null;
+				throw e;
+			}
+			finally
+			{
+				redrawGeohashPin();
+				redrawGraticuleOutline();
+				updateInfoLayer();
+			}
 		}
 
 		private async void Reload_Click(object sender, EventArgs e)
@@ -270,7 +286,7 @@ namespace Geohashing
 
 		private void Goto_Click(object sender, EventArgs e)
 		{
-			if(geohash == null)
+			if (geohash == null)
 				return;
 			new MapsDirectionsTask
 			{
