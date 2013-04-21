@@ -73,7 +73,7 @@ namespace Geohashing
 			base.OnNavigatedTo(e);
 			if (NavigationContext.QueryString.ContainsKey("lat") && NavigationContext.QueryString.ContainsKey("lon"))
 			{
-				coordinate = new GeoCoordinate(Double.Parse(NavigationContext.QueryString["lat"]), Double.Parse(NavigationContext.QueryString["lon"]));
+				coordinate = new GeoCoordinate(Double.Parse(NavigationContext.QueryString["lat"], CultureInfo.InvariantCulture), Double.Parse(NavigationContext.QueryString["lon"], CultureInfo.InvariantCulture));
 				if (NavigationContext.QueryString.ContainsKey("mode"))
 					settings.CartographicMode = (MapCartographicMode)Enum.Parse(typeof(MapCartographicMode), NavigationContext.QueryString["mode"]);
 			}

@@ -201,6 +201,8 @@ namespace Geohashing
 		// Implementation based on http://www.sharpgis.net/post/2011/11/20/Correctly-displaying-your-current-location.aspx
 		public string CoordinateToString(GeoCoordinate coordinate)
 		{
+			if (coordinate == null)
+				throw new ArgumentNullException("coordinate");
 			char ns = coordinate.Latitude < 0 ? 'S' : 'N'; //Southern or Northern hemisphere?
 			char ew = coordinate.Longitude < 0 ? 'W' : 'E'; //Eastern or Western hemisphere?
 			switch (CoordinatesMode)
@@ -214,7 +216,7 @@ namespace Geohashing
 					double minLon = (degLon - (int)degLon) * 60;
 					double secLat = (minLat - (int)minLat) * 60;
 					double secLon = (minLon - (int)minLon) * 60;
-					return String.Format("{0}{1}°{2}'{3}\", {4}{5}°{6}'{7}\"", ns, (int)degLat, (int)minLat, (int)Math.Round(secLat), ew, (int)degLon, (int)minLon, (int)Math.Round(secLon));
+					return String.Format(CultureInfo.CurrentCulture, "{0}{1}°{2}'{3}\", {4}{5}°{6}'{7}\"", ns, (int)degLat, (int)minLat, (int)Math.Round(secLat), ew, (int)degLon, (int)minLon, (int)Math.Round(secLon));
 				default:
 					return "Unknown coordinates mode " + CoordinatesMode + " - this should never happen";
 			}

@@ -48,13 +48,13 @@ namespace Geohashing
 				store.DeleteFile("/Shared/ShellContent/" + file); // Delete all tile images older than 3 days
 		}
 
-		public static void CreateOrUpdate(double latitude, double longitude, GeohashMode hashmode, MapCartographicMode mapmode)
+		public static void CreateOrUpdate(double latitude, double longitude, GeohashMode hashMode, MapCartographicMode mapMode)
 		{
 			Uri uri = new Uri("/MainPage.xaml"
 				+ "?lat=" + latitude
 				+ "&lon=" + longitude
-				+ "&hashmode=" + hashmode.ToString()
-				+ "&mapmode=" + mapmode.ToString()
+				+ "&hashmode=" + hashMode.ToString()
+				+ "&mapmode=" + mapMode.ToString()
 				, UriKind.Relative);
 			createOrUpdateTile(uri);
 			AddUpdater();
