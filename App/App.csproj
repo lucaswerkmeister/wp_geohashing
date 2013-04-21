@@ -130,24 +130,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\ApplicationIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileMediumLarge.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Tiles\IconicTileSmall.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="Images\favs.png" />
     <Content Include="Images\feature.search.png" />
@@ -155,6 +137,15 @@
     <Content Include="Images\next.png" />
     <Content Include="Images\refresh.png" />
     <Content Include="license.txt" />
+    <Content Include="Screenshots\720p1.png" />
+    <Content Include="Screenshots\720p2.png" />
+    <Content Include="Screenshots\720p3.png" />
+    <Content Include="Screenshots\WVGA1.png" />
+    <Content Include="Screenshots\WVGA2.png" />
+    <Content Include="Screenshots\WVGA3.png" />
+    <Content Include="Screenshots\WXGA1.png" />
+    <Content Include="Screenshots\WXGA2.png" />
+    <Content Include="Screenshots\WXGA3.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
   </ItemGroup>
@@ -182,6 +173,9 @@
       <Project>{D562CCD3-191B-4A5E-9151-23BFC89E7D83}</Project>
       <Name>Base</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
