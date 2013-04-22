@@ -137,6 +137,13 @@
     <Content Include="Images\next.png" />
     <Content Include="Images\refresh.png" />
     <Content Include="license.txt" />
+    <Content Include="Logos\159x159.png" />
+    <Content Include="Logos\173x173.png" />
+    <Content Include="Logos\200x200.png" />
+    <Content Include="Logos\336x336.png" />
+    <Content Include="Logos\62x62.png" />
+    <Content Include="Logos\99x99.png" />
+    <None Include="Logos\Original.svg" />
     <Content Include="Screenshots\720p1.png" />
     <Content Include="Screenshots\720p2.png" />
     <Content Include="Screenshots\720p3.png" />
