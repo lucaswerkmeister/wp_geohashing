@@ -51,8 +51,8 @@ namespace Geohashing
 		public static void CreateOrUpdate(double latitude, double longitude, GeohashMode hashMode, MapCartographicMode mapMode)
 		{
 			Uri uri = new Uri("/MainPage.xaml"
-				+ "?lat=" + latitude
-				+ "&lon=" + longitude
+				+ "?lat=" + latitude.ToString(CultureInfo.InvariantCulture)
+				+ "&lon=" + longitude.ToString(CultureInfo.InvariantCulture)
 				+ "&hashmode=" + hashMode.ToString()
 				+ "&mapmode=" + mapMode.ToString()
 				, UriKind.Relative);
@@ -92,9 +92,9 @@ namespace Geohashing
 										 where part.Split('=')[0] == key
 										 select part.Split('=')[1];
 			key = "lat";
-			double lat = Double.Parse(filter.First());
+			double lat = Double.Parse(filter.First(), CultureInfo.InvariantCulture);
 			key = "lon";
-			double lon = Double.Parse(filter.First());
+			double lon = Double.Parse(filter.First(), CultureInfo.InvariantCulture);
 			key = "mapmode";
 			MapCartographicMode mapmode = (MapCartographicMode)Enum.Parse(typeof(MapCartographicMode), filter.DefaultIfEmpty(MapCartographicMode.Road.ToString()).First());
 			key = "hashmode";

@@ -281,6 +281,8 @@ namespace Geohashing
 
 		private void Pin_Click(object sender, EventArgs e)
 		{
+			if (coordinate == null)
+				return;
 			Tiles.CreateOrUpdate(coordinate.Latitude, coordinate.Longitude, settings.HashMode, settings.CartographicMode);
 		}
 
