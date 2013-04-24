@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Maps.Controls;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 /*
@@ -124,13 +125,13 @@ namespace Geohashing
 					+ "&format=png"
 					+ "&key=" + PrivateResources.BingMapsKey;
 
+				Settings settings = new Settings();
 				IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
 				string filename = "/Shared/ShellContent/" + hash.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + '-' + location.Latitude.ToString("F2", CultureInfo.InvariantCulture) + "," + location.Longitude.ToString("F2", CultureInfo.InvariantCulture) + "-" + mapModeForRequest + ".png";
-				if (!store.FileExists(filename))
+				if (!store.FileExists(filename) && (!settings.LoadImagesOverWifi || DeviceNetworkInformation.IsWiFiEnabled))
 					using (IsolatedStorageFileStream stream = store.OpenFile(filename, FileMode.OpenOrCreate))
 						(await HttpWebRequest.Create(mapRequest).GetResponseAsync()).GetResponseStream().CopyTo(stream);
 
-				Settings settings = new Settings();
 				return new FlipTileData
 				{
 					Title = title,

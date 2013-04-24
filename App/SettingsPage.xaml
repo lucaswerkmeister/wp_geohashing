@@ -51,6 +51,7 @@
 			<StackPanel>
 				<CheckBox Content="Locate on app start" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
 				<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
+				<CheckBox Content="Only load tile images over WiFi" IsChecked="{Binding LoadImagesOverWifi, Mode=TwoWay, Source={StaticResource settings}}"/>
 				<TextBlock TextWrapping="Wrap" Text="Map mode"/>
 				<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 				<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>

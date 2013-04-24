@@ -48,6 +48,7 @@ namespace Geohashing
 		private const string geohashModeSettingName = "GeohashMode";
 		private const string coordinatesModeSettingName = "CoordinatesMode";
 		private const string lengthUnitSettingName = "LengthUnit";
+		private const string loadImagesOverWifiSettingName = "LoadImagesOverWifi";
 
 		private const bool localizeSettingDefault = true;
 		private const bool autoZoomSettingDefault = true;
@@ -56,6 +57,7 @@ namespace Geohashing
 		private const GeohashMode geohashModeSettingDefault = GeohashMode.CurrentGraticule;
 		private const CoordinatesDisplay coordinatesModeSettingDefault = CoordinatesDisplay.DegreeMinutesSeconds;
 		private const UnitSystem lengthUnitSettingDefault = UnitSystem.Metric;
+		private const bool loadImagesOverWifiSettingDefault = false;
 
 		public static event EventHandler<SettingChangedEventArgs> LocalizeChanged;
 		public static event EventHandler<SettingChangedEventArgs> AutoZoomChanged;
@@ -64,6 +66,7 @@ namespace Geohashing
 		public static event EventHandler<SettingChangedEventArgs> GeohashModeChanged;
 		public static event EventHandler<SettingChangedEventArgs> CoordinatesModeChanged;
 		public static event EventHandler<SettingChangedEventArgs> LengthUnitChanged;
+		public static event EventHandler<SettingChangedEventArgs> LoadImagesOverWifiChanged;
 
 		private IsolatedStorageSettings isolatedStore = System.ComponentModel.DesignerProperties.IsInDesignTool ? null : IsolatedStorageSettings.ApplicationSettings;
 
@@ -189,6 +192,24 @@ namespace Geohashing
 					Save();
 					if (LengthUnitChanged != null)
 						LengthUnitChanged(oldValue, new SettingChangedEventArgs(lengthUnitSettingName));
+				}
+			}
+		}
+
+		public bool LoadImagesOverWifi
+		{
+			get
+			{
+				return GetValueOrDefault(loadImagesOverWifiSettingName, loadImagesOverWifiSettingDefault);
+			}
+			set
+			{
+				bool oldValue = GetValueOrDefault(loadImagesOverWifiSettingName, loadImagesOverWifiSettingDefault);
+				if (AddOrUpdateValue(loadImagesOverWifiSettingName, value))
+				{
+					Save();
+					if (LoadImagesOverWifiChanged != null)
+						LoadImagesOverWifiChanged(oldValue, new SettingChangedEventArgs(loadImagesOverWifiSettingName));
 				}
 			}
 		}
