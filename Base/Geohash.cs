@@ -31,7 +31,7 @@ namespace Geohashing
 {
 	public class Geohash
 	{
-		private static readonly DateTime Rule30WValidityStart = DateTime.Parse("2008-05-27", CultureInfo.InvariantCulture);
+		private static readonly DateTime Rule30WValidityStart = new DateTime(2008, 05, 27);
 
 		private readonly DateTime date;
 		private readonly GeoCoordinate position;
