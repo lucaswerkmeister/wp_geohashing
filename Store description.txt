@@ -1,0 +1,12 @@
+Geohashing lets you explore your environment at a randomly generated location, each day!
+
+Features:
+* Calculate the geohash for any location and date
+* Show the nearest geohash, instead of that of your current graticule
+* Pin locations to the start screen - the tiles are updated with map images and distance information
+* Send the geohash to the Maps app for navigation instructions
+* Open source!
+
+What is geohashing? Geohashing is an algorithm that generates a random location in your general area each day, based on the Dow Jones of that day (so each day it's a surprise where it lands).
+The location is the same for all people in that area, so it's also a great way to meet new people who are also interested in geohashing.
+You can also find more information at http://wiki.xkcd.com/geohashing/Main_Page.
