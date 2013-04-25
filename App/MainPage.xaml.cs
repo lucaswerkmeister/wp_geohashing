@@ -279,11 +279,20 @@ namespace Geohashing
 			NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
 		}
 
-		private void Pin_Click(object sender, EventArgs e)
+		private async void Pin_Click(object sender, EventArgs e)
 		{
 			if (coordinate == null)
 				return;
-			Tiles.CreateOrUpdate(coordinate.Latitude, coordinate.Longitude, settings.HashMode, settings.CartographicMode);
+			Uri uri = Tiles.MakeUri(coordinate.Latitude, coordinate.Longitude, settings.HashMode, settings.CartographicMode);
+			if (!ShellTile.ActiveTiles.Any((existing) => existing.NavigationUri.Equals(uri)))
+			{
+				startTask("Preparing live tile...");
+				FlipTileData tileData = await Tiles.CreateTileData(uri);
+				endTask();
+				ShellTile.Create(uri, tileData, false);
+			}
+			if (ScheduledActionService.Find("tileUpdater") == null)
+				ScheduledActionService.Add(new PeriodicTask("tileUpdater") { Description = "Updates the secondary live tiles." });
 		}
 
 		private void Goto_Click(object sender, EventArgs e)

@@ -49,25 +49,20 @@ namespace Geohashing
 				store.DeleteFile("/Shared/ShellContent/" + file); // Delete all tile images older than 3 days
 		}
 
-		public static void CreateOrUpdate(double latitude, double longitude, GeohashMode hashMode, MapCartographicMode mapMode)
+		public static Uri MakeUri(double latitude, double longitude, GeohashMode hashMode, MapCartographicMode mapMode)
 		{
-			Uri uri = new Uri("/MainPage.xaml"
+			return new Uri("/MainPage.xaml"
 				+ "?lat=" + latitude.ToString(CultureInfo.InvariantCulture)
 				+ "&lon=" + longitude.ToString(CultureInfo.InvariantCulture)
 				+ "&hashmode=" + hashMode.ToString()
 				+ "&mapmode=" + mapMode.ToString()
 				, UriKind.Relative);
-			createOrUpdateTile(uri);
-			AddUpdater();
 		}
 
-		public static void AddUpdater()
+		public static void Update(double latitude, double longitude, GeohashMode hashMode, MapCartographicMode mapMode)
 		{
-			if (ScheduledActionService.Find("tileUpdater") == null)
-				ScheduledActionService.Add(new PeriodicTask("tileUpdater") { Description = "Updates the secondary live tiles." });
-#if DEBUG
-			ScheduledActionService.LaunchForTest("tileUpdater", TimeSpan.FromSeconds(0));
-#endif
+			Uri uri = MakeUri(latitude, longitude, hashMode, mapMode);
+			updateTile(uri);
 		}
 
 		public static void RemoveUpdater()
@@ -76,15 +71,12 @@ namespace Geohashing
 				ScheduledActionService.Remove("tileUpdater");
 		}
 
-		private static async void createOrUpdateTile(Uri uri)
+		private static async void updateTile(Uri uri)
 		{
-			if (!ShellTile.ActiveTiles.Any((existing) => existing.NavigationUri.Equals(uri)))
-				ShellTile.Create(uri, await createTileData(uri), false);
-			else
-				ShellTile.ActiveTiles.First((existing) => existing.NavigationUri.Equals(uri)).Update(await createTileData(uri));
+			ShellTile.ActiveTiles.First((existing) => existing.NavigationUri.Equals(uri)).Update(await CreateTileData(uri));
 		}
 
-		private static async Task<FlipTileData> createTileData(Uri tileUri)
+		public static async Task<FlipTileData> CreateTileData(Uri tileUri)
 		{
 			string query = tileUri.ToString().Substring(tileUri.ToString().IndexOf('?') + 1);
 			string[] parts = query.Split('&');
@@ -153,7 +145,7 @@ namespace Geohashing
 
 		private static async Task updateTile(ShellTile tile)
 		{
-			tile.Update(await createTileData(tile.NavigationUri));
+			tile.Update(await CreateTileData(tile.NavigationUri));
 		}
 	}
 }
