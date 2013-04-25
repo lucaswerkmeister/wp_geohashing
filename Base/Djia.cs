@@ -46,6 +46,8 @@ namespace Geohashing
 		private static async Task<string> Load(DateTime date)
 		{
 			HttpWebResponse response = await HttpWebRequest.Create("http://geo.crox.net/djia/" + date.Year + "/" + date.Month + "/" + date.Day).GetResponseAsync();
+			if (response == null)
+				throw new NoDjiaException(NoDjiaException.NoDjiaCause.UnknownConnectionError);
 			string content;
 			using (StreamReader sr = new StreamReader(response.GetResponseStream()))
 				content = await sr.ReadToEndAsync();
