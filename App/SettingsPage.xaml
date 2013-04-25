@@ -36,34 +36,56 @@
 		<local:EnumIntConverter x:Name="enumIntConverter"/>
 	</phone:PhoneApplicationPage.Resources>
 
-	<Grid Background="Transparent">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+	<phone:Panorama>
 
-		<StackPanel Grid.Row="0" Margin="12,17,0,28">
-			<TextBlock Text="Geohashing" Style="{StaticResource PhoneTextNormalStyle}"/>
-			<TextBlock Text="Settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-		</StackPanel>
+		<phone:PanoramaItem Header="Settings">
+			<Grid Background="Transparent">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
 
-		<ScrollViewer x:Name="scrollViewer" Grid.Row="1" Margin="12,0,12,0">
-			<StackPanel>
-				<CheckBox Content="Locate on app start" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<CheckBox Content="Only load tile images over WiFi" IsChecked="{Binding LoadImagesOverWifi, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<TextBlock TextWrapping="Wrap" Text="Map mode"/>
-				<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
-				<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
-				<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
-				<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<TextBlock TextWrapping="Wrap" Text="Coordinates mode"/>
-				<toolkit:ListPicker x:Name="coordinatesModeListPicker" SelectedIndex="{Binding CoordinatesMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-				<TextBlock TextWrapping="Wrap" Text="Lenght units"/>
-				<toolkit:ListPicker x:Name="lengthUnitListPicker" SizeChanged="scrollToLengthUnitListPicker" SelectedIndex="{Binding LengthUnit, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-			</StackPanel>
-		</ScrollViewer>
-	</Grid>
+				<ScrollViewer x:Name="scrollViewer" Grid.Row="1" Margin="12,0,12,0">
+					<StackPanel>
+						<CheckBox Content="Locate on app start" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<CheckBox Content="Only load tile images over WiFi" IsChecked="{Binding LoadImagesOverWifi, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<TextBlock TextWrapping="Wrap" Text="Map mode"/>
+						<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
+						<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
+						<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
+						<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<TextBlock TextWrapping="Wrap" Text="Coordinates mode"/>
+						<toolkit:ListPicker x:Name="coordinatesModeListPicker" SelectedIndex="{Binding CoordinatesMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<TextBlock TextWrapping="Wrap" Text="Lenght units"/>
+						<toolkit:ListPicker x:Name="lengthUnitListPicker" SizeChanged="scrollToLengthUnitListPicker" SelectedIndex="{Binding LengthUnit, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
+					</StackPanel>
+				</ScrollViewer>
+			</Grid>
+		</phone:PanoramaItem>
+
+		<phone:PanoramaItem Header="About" VerticalAlignment="Top">
+			<RichTextBox TextWrapping="Wrap">
+				<Paragraph>
+					Geohashing for Windows Phone, version 1.0.0.0, developed by Lucas Werkmeister.
+				</Paragraph>
+				<Paragraph>
+					This program is free software, licensed under the GNU General Public License, version 3.
+				</Paragraph>
+				<Paragraph>
+					You can view the source code
+					<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing" TargetName="_">here.</Hyperlink>
+				</Paragraph>
+				<Paragraph>
+					Found a bug?
+					<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing/issues/new" TargetName="_">Report it!</Hyperlink>
+					Or just
+					<Hyperlink NavigateUri="mailto:mail@lucaswerkmeister.de" TargetName="_">send me an e-mail.</Hyperlink>
+				</Paragraph>
+			</RichTextBox>
+		</phone:PanoramaItem>
+
+	</phone:Panorama>
 
 </phone:PhoneApplicationPage>
