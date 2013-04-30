@@ -66,24 +66,35 @@
 		</phone:PanoramaItem>
 
 		<phone:PanoramaItem Header="About" VerticalAlignment="Top">
-			<RichTextBox TextWrapping="Wrap">
-				<Paragraph>
-					Geohashing for Windows Phone, version 1.0.0.0, developed by Lucas Werkmeister.
-				</Paragraph>
-				<Paragraph>
-					This program is free software, licensed under the GNU General Public License, version 3.
-				</Paragraph>
-				<Paragraph>
-					You can view the source code
-					<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing" TargetName="_">here.</Hyperlink>
-				</Paragraph>
-				<Paragraph>
-					Found a bug?
-					<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing/issues/new" TargetName="_">Report it!</Hyperlink>
-					Or just
-					<Hyperlink NavigateUri="mailto:mail@lucaswerkmeister.de" TargetName="_">send me an e-mail.</Hyperlink>
-				</Paragraph>
-			</RichTextBox>
+			<StackPanel>
+				<RichTextBox TextWrapping="Wrap">
+					<Paragraph>
+						Geohashing for Windows Phone, version 1.0.0.0, developed by Lucas Werkmeister.
+					</Paragraph>
+					<Paragraph>
+						This program is free software, licensed under the GNU General Public License, version 3.
+					</Paragraph>
+					<Paragraph>
+						You can view the source code
+						<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing" TargetName="_">here.</Hyperlink>
+					</Paragraph>
+					<Paragraph>
+						Found a bug?
+						<Hyperlink NavigateUri="https://www.github.com/lucaswerkmeister/wp_geohashing/issues/new" TargetName="_">Report it!</Hyperlink>
+						Or just
+						<Hyperlink NavigateUri="mailto:mail@lucaswerkmeister.de" TargetName="_">send me an e-mail.</Hyperlink>
+					</Paragraph>
+				</RichTextBox>
+				<TextBlock FontSize="25">Privacy policy</TextBlock>
+				<RichTextBox TextWrapping="Wrap">
+					<Paragraph>
+						Your location information is used only locally and not sent to anyone over the internet. Other potentially sensitive data is not used. No one, not even us, has access to your sensitive data over this app.
+					</Paragraph>
+					<Paragraph>
+						We respect your privacy; should we, by some means, receive sensitive data from you, we will handle them confidentially and not pass them on to third parties.
+					</Paragraph>
+				</RichTextBox>
+			</StackPanel>
 		</phone:PanoramaItem>
 
 	</phone:Panorama>
