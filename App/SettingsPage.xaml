@@ -58,7 +58,7 @@
 						<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 						<TextBlock TextWrapping="Wrap" Text="Coordinates mode"/>
 						<toolkit:ListPicker x:Name="coordinatesModeListPicker" SelectedIndex="{Binding CoordinatesMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<TextBlock TextWrapping="Wrap" Text="Lenght units"/>
+						<TextBlock TextWrapping="Wrap" Text="Length units"/>
 						<toolkit:ListPicker x:Name="lengthUnitListPicker" SizeChanged="scrollToLengthUnitListPicker" SelectedIndex="{Binding LengthUnit, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 					</StackPanel>
 				</ScrollViewer>
