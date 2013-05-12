@@ -235,7 +235,7 @@ namespace Geohashing
 				switch (e.Cause)
 				{
 					case NoDjiaException.NoDjiaCause.NotAvailable:
-						message += ": DJIA N/A"; break;
+						message += ": DJIA not available"; break;
 					case NoDjiaException.NoDjiaCause.NoInternet:
 						message += ": No internet connection"; break;
 				}
