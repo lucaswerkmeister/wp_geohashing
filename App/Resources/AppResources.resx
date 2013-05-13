@@ -224,7 +224,46 @@
   <data name="PrivacyPolicyParagraph2" xml:space="preserve">
     <value>We respect your privacy; should we, by some means, receive sensitive data from you, we will handle them confidentially and not pass them on to third parties.</value>
   </data>
+  <data name="CoordinatesDisplayDecimal" xml:space="preserve">
+    <value>Decimal (1.034)</value>
+  </data>
+  <data name="CoordinatesDisplayDegreeMinutesSeconds" xml:space="preserve">
+    <value>DMS (1°2'3'')</value>
+  </data>
+  <data name="GeohashModeCurrentGraticule" xml:space="preserve">
+    <value>CurrentGraticule</value>
+  </data>
+  <data name="GeohashModeNearest" xml:space="preserve">
+    <value>Nearest</value>
+  </data>
+  <data name="GeoPrecisionDefault" xml:space="preserve">
+    <value>Default precision</value>
+  </data>
+  <data name="GeoPrecisionDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="GeoPrecisionHigh" xml:space="preserve">
+    <value>High precision</value>
+  </data>
+  <data name="MapCartographicModeAerial" xml:space="preserve">
+    <value>Aerial</value>
+  </data>
+  <data name="MapCartographicModeHybrid" xml:space="preserve">
+    <value>Hybrid</value>
+  </data>
+  <data name="MapCartographicModeRoad" xml:space="preserve">
+    <value>Road</value>
+  </data>
+  <data name="MapCartographicModeTerrain" xml:space="preserve">
+    <value>Terrain</value>
+  </data>
   <data name="MapsAppLabel" xml:space="preserve">
     <value>Geohash for yyyy-MM-dd, %LAT%, %LON%</value>
+  </data>
+  <data name="UnitSystemImperial" xml:space="preserve">
+    <value>Imperial</value>
+  </data>
+  <data name="UnitSystemMetric" xml:space="preserve">
+    <value>Metric</value>
   </data>
 </root>

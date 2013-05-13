@@ -169,6 +169,24 @@ namespace Geohashing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decimal (1.034).
+        /// </summary>
+        public static string CoordinatesDisplayDecimal {
+            get {
+                return ResourceManager.GetString("CoordinatesDisplayDecimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DMS (1°2&apos;3&apos;&apos;).
+        /// </summary>
+        public static string CoordinatesDisplayDegreeMinutesSeconds {
+            get {
+                return ResourceManager.GetString("CoordinatesDisplayDegreeMinutesSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coordinates mode.
         /// </summary>
         public static string CoordinatesModeText {
@@ -187,11 +205,56 @@ namespace Geohashing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CurrentGraticule.
+        /// </summary>
+        public static string GeohashModeCurrentGraticule {
+            get {
+                return ResourceManager.GetString("GeohashModeCurrentGraticule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nearest.
+        /// </summary>
+        public static string GeohashModeNearest {
+            get {
+                return ResourceManager.GetString("GeohashModeNearest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geohash mode.
         /// </summary>
         public static string GeohashModeText {
             get {
                 return ResourceManager.GetString("GeohashModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default precision.
+        /// </summary>
+        public static string GeoPrecisionDefault {
+            get {
+                return ResourceManager.GetString("GeoPrecisionDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string GeoPrecisionDisabled {
+            get {
+                return ResourceManager.GetString("GeoPrecisionDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High precision.
+        /// </summary>
+        public static string GeoPrecisionHigh {
+            get {
+                return ResourceManager.GetString("GeoPrecisionHigh", resourceCulture);
             }
         }
         
@@ -246,6 +309,42 @@ namespace Geohashing.Resources {
         public static string MainPageTitle {
             get {
                 return ResourceManager.GetString("MainPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aerial.
+        /// </summary>
+        public static string MapCartographicModeAerial {
+            get {
+                return ResourceManager.GetString("MapCartographicModeAerial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hybrid.
+        /// </summary>
+        public static string MapCartographicModeHybrid {
+            get {
+                return ResourceManager.GetString("MapCartographicModeHybrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Road.
+        /// </summary>
+        public static string MapCartographicModeRoad {
+            get {
+                return ResourceManager.GetString("MapCartographicModeRoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terrain.
+        /// </summary>
+        public static string MapCartographicModeTerrain {
+            get {
+                return ResourceManager.GetString("MapCartographicModeTerrain", resourceCulture);
             }
         }
         
@@ -381,6 +480,24 @@ namespace Geohashing.Resources {
         public static string SettingsPageTitle {
             get {
                 return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imperial.
+        /// </summary>
+        public static string UnitSystemImperial {
+            get {
+                return ResourceManager.GetString("UnitSystemImperial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metric.
+        /// </summary>
+        public static string UnitSystemMetric {
+            get {
+                return ResourceManager.GetString("UnitSystemMetric", resourceCulture);
             }
         }
     }

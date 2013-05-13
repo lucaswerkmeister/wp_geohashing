@@ -39,27 +39,20 @@ namespace Geohashing
 
 			Settings settings = new Settings();
 
-			cartographicModeListPicker.ItemsSource = Enum.GetValues(typeof(MapCartographicMode));
-			cartographicModeListPicker.SelectedItem = settings.CartographicMode;
+			cartographicModeListPicker.ItemsSource = GetLocalizedEnumValues(typeof(MapCartographicMode));
+			cartographicModeListPicker.SelectedItem = cartographicModeListPicker.Items[(int)settings.CartographicMode];
 
-			Array rawValues = Enum.GetValues(typeof(GeohashMode));
-			List<string> values = new List<string>();
-			foreach (GeohashMode e in rawValues)
-				values.Add((typeof(GeohashMode).GetMember(e.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
-			geohashModeListPicker.ItemsSource = values;
-			geohashModeListPicker.SelectedItem = (typeof(GeohashMode).GetMember(settings.HashMode.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description;
+			geohashModeListPicker.ItemsSource = GetLocalizedEnumValues(typeof(GeohashMode));
+			geohashModeListPicker.SelectedItem = geohashModeListPicker.Items[(int)settings.HashMode];
 
-			rawValues = Enum.GetValues(typeof(CoordinatesDisplay));
-			values = new List<string>();
-			foreach (CoordinatesDisplay e in rawValues)
-				values.Add((typeof(CoordinatesDisplay).GetMember(e.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
-			coordinatesModeListPicker.ItemsSource = values;
-			coordinatesModeListPicker.SelectedItem = (typeof(CoordinatesDisplay).GetMember(settings.CoordinatesMode.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description;
+			coordinatesModeListPicker.ItemsSource = GetLocalizedEnumValues(typeof(CoordinatesDisplay));
+			coordinatesModeListPicker.SelectedItem = coordinatesModeListPicker.Items[(int)settings.CoordinatesMode];
 
-			lengthUnitListPicker.ItemsSource = Enum.GetValues(typeof(UnitSystem));
-			lengthUnitListPicker.SelectedItem = settings.LengthUnit;
+			lengthUnitListPicker.ItemsSource = GetLocalizedEnumValues(typeof(UnitSystem));
+			lengthUnitListPicker.SelectedItem = lengthUnitListPicker.Items[(int)settings.LengthUnit];
 
-			StringReplacer replacer = (string text) => text.Replace("%VERSION%", new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version.ToString())
+			StringReplacer replacer = (string text) => text
+				.Replace("%VERSION%", new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version.ToString())
 				.Replace("%SOURCELINK%", @"<Hyperlink NavigateUri=""https://www.github.com/lucaswerkmeister/wp_geohashing"" TargetName=""_"">" + AppResources.AboutSourceLink + @"</Hyperlink>")
 				.Replace("%BUGREPORTLINK%", @"<Hyperlink NavigateUri=""https://www.github.com/lucaswerkmeister/wp_geohashing/issues/new"" TargetName=""_"">" + AppResources.AboutBugReportLink + @"</Hyperlink>")
 				.Replace("%EMAILLINK%", @"<Hyperlink NavigateUri=""mailto:mail@lucaswerkmeister.de"" TargetName=""_"">" + AppResources.AboutEmailLink + @"</Hyperlink>");
@@ -90,6 +83,14 @@ namespace Geohashing
 						" + AppResources.PrivacyPolicyParagraph2 + @"
 					</Paragraph>
 				</Section>";
+		}
+
+		private IEnumerable<string> GetLocalizedEnumValues(Type enumType)
+		{
+			if (!enumType.IsEnum)
+				throw new ArgumentException("Type must be an enum type!", "enumType");
+			foreach (var value in Enum.GetValues(enumType))
+				yield return (string)typeof(AppResources).GetProperty(enumType.Name + value.ToString()).GetValue(null);
 		}
 
 		private void DjiaBufferSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

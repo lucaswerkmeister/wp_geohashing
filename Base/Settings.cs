@@ -9,27 +9,20 @@ namespace Geohashing
 {
 	public enum GeoPrecision
 	{
-		[Description("Disabled")]
 		Disabled,
-		[Description("Default precision")]
 		Default,
-		[Description("High precision")]
 		High
 	}
 
 	public enum GeohashMode
 	{
-		[Description("Nearest")]
 		Nearest,
-		[Description("Current graticule")]
 		CurrentGraticule
 	}
 
 	public enum CoordinatesDisplay
 	{
-		[Description("Decimal (1.034)")]
 		Decimal,
-		[Description("DMS (1°2'3'')")]
 		DegreeMinutesSeconds
 	}
 
