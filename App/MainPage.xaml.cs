@@ -210,7 +210,7 @@ namespace Geohashing
 			Dispatcher.BeginInvoke(() =>
 			{
 				if (settings.AutoZoom)
-					map.SetView(new LocationRectangle(geohash.Position, 2, 2), MapAnimationKind.Parabolic);
+					map.SetView(LocationRectangle.CreateBoundingRectangle(geohash.Position, coordinate), MapAnimationKind.Parabolic);
 			});
 		}
 		#endregion
