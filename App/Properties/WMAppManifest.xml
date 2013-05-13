@@ -1,39 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-	<DefaultLanguage xmlns="" code="en-US" />
-	<App xmlns="" ProductID="{2d465ad8-6c86-488d-ae1b-fcf8eac281c0}" Title="Geohashing" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Lucas Werkmeister" Description="Geohashing on your Windows Phone." Publisher="Lucas Werkmeister" PublisherID="{d0081b63-3fa4-41a9-93c1-f9156496d008}">
-		<IconPath IsRelative="true" IsResource="false">Logos\62x62.png</IconPath>
-		<Capabilities>
-			<Capability Name="ID_CAP_NETWORKING" />
-			<Capability Name="ID_CAP_SENSORS" />
-			<Capability Name="ID_CAP_MAP" />
-			<Capability Name="ID_CAP_LOCATION" />
-		</Capabilities>
-		<Tasks>
-			<DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
-			<ExtendedTask Name="BackgroundTask">
-				<BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="ScheduledAgent" Source="ScheduledAgent" Type="Geohashing.ScheduledAgent" />
-			</ExtendedTask>
-		</Tasks>
-		<Tokens>
-			<PrimaryToken TokenID="GeohashingToken" TaskName="_default">
-				<TemplateFlip>
-					<SmallImageURI IsRelative="true" IsResource="false">Logos\159x159.png</SmallImageURI>
-					<Count>0</Count>
-					<BackgroundImageURI IsRelative="true" IsResource="false">Logos\336x336.png</BackgroundImageURI>
-					<Title>Geohashing</Title>
+  <DefaultLanguage xmlns="" code="en-US" />
+  <Languages xmlns="">
+    <Language code="qps-ploc" />
+    <Language code="de-DE" />
+  </Languages>
+  <App xmlns="" ProductID="{2d465ad8-6c86-488d-ae1b-fcf8eac281c0}" Title="Geohashing" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Lucas Werkmeister" Description="Geohashing on your Windows Phone." Publisher="Lucas Werkmeister" PublisherID="{d0081b63-3fa4-41a9-93c1-f9156496d008}">
+    <IconPath IsRelative="true" IsResource="false">Logos\62x62.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_SENSORS" />
+      <Capability Name="ID_CAP_MAP" />
+      <Capability Name="ID_CAP_LOCATION" />
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="ScheduledAgent" Source="ScheduledAgent" Type="Geohashing.ScheduledAgent" />
+      </ExtendedTask>
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="GeohashingToken" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">Logos\159x159.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Logos\336x336.png</BackgroundImageURI>
+          <Title>Geohashing</Title>
           <BackContent></BackContent>
           <BackBackgroundImageURI></BackBackgroundImageURI>
           <BackTitle></BackTitle>
           <DeviceLockImageURI></DeviceLockImageURI>
-					<HasLarge>False</HasLarge>
-				</TemplateFlip>
-			</PrimaryToken>
-		</Tokens>
-		<ScreenResolutions>
-			<ScreenResolution Name="ID_RESOLUTION_WVGA" />
-			<ScreenResolution Name="ID_RESOLUTION_WXGA" />
-			<ScreenResolution Name="ID_RESOLUTION_HD720P" />
-		</ScreenResolutions>
-	</App>
+          <HasLarge>False</HasLarge>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
+  </App>
 </Deployment>

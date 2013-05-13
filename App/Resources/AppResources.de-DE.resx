@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ResourceFlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+    <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
+  </data>
+  <data name="ResourceLanguage" xml:space="preserve">
+    <value>de-DE</value>
+    <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>Geohashing</value>
+  </data>
+  <data name="AutoZoomText" xml:space="preserve">
+    <value>Auto-zoom</value>
+  </data>
+  <data name="CantLoadHashPrefix" xml:space="preserve">
+    <value>Konnte hash nicht laden</value>
+  </data>
+  <data name="CoordinatesModeText" xml:space="preserve">
+    <value>Koordinaten-Modus</value>
+  </data>
+  <data name="DjiaBufferSizeText" xml:space="preserve">
+    <value>Anzahl gespeicherter Dow Jones-Werte</value>
+  </data>
+  <data name="GeohashModeText" xml:space="preserve">
+    <value>Geohash-Modus</value>
+  </data>
+  <data name="GettingLocationText" xml:space="preserve">
+    <value>Orten...</value>
+  </data>
+  <data name="ImagesOverWifiText" xml:space="preserve">
+    <value>Kachelbilder nur über WLAN laden</value>
+  </data>
+  <data name="LengthUnitsText" xml:space="preserve">
+    <value>Längeneinheit</value>
+  </data>
+  <data name="LoadingHashText" xml:space="preserve">
+    <value>Lade hash...</value>
+  </data>
+  <data name="LocateOnAppStartText" xml:space="preserve">
+    <value>Beim App-Start orten</value>
+  </data>
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>Aktueller hash</value>
+  </data>
+  <data name="MapModeText" xml:space="preserve">
+    <value>Kartenmodus</value>
+  </data>
+  <data name="NoDjiaSuffix" xml:space="preserve">
+    <value>Dow Jones nicht verfügbar</value>
+  </data>
+  <data name="NoInternetSuffix" xml:space="preserve">
+    <value>Keine Internetverbindung</value>
+  </data>
+  <data name="OpenInMapsButtonText" xml:space="preserve">
+    <value>in Maps öffnen</value>
+  </data>
+  <data name="PinStartScreenButtonText" xml:space="preserve">
+    <value>anpinnen</value>
+  </data>
+  <data name="ReloadLocationButtonText" xml:space="preserve">
+    <value>erneut orten</value>
+  </data>
+  <data name="SettingsAboutButtonText" xml:space="preserve">
+    <value>Einstellungen &amp; Über</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="AboutBugReportLink" xml:space="preserve">
+    <value>Melde ihn</value>
+  </data>
+  <data name="AboutEmailLink" xml:space="preserve">
+    <value>schick mir eine E-Mail</value>
+  </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="AboutParagraph1" xml:space="preserve">
+    <value>Geohashing für Windows Phone, Version %VERSION%, entwickelt von Lucas Werkmeister.</value>
+  </data>
+  <data name="AboutParagraph2" xml:space="preserve">
+    <value>Dieses Programm ist freie Software, lizensiert unter der GNU General Public License, Version 3.</value>
+  </data>
+  <data name="AboutParagraph3" xml:space="preserve">
+    <value>Du kannst dir den Quelltext %SOURCELINK% anschauen.</value>
+  </data>
+  <data name="AboutParagraph4" xml:space="preserve">
+    <value>Du hast einen Fehler gefunden? %BUGREPORTLINK%! Oder %EMAILLINK%.</value>
+  </data>
+  <data name="AboutSourceLink" xml:space="preserve">
+    <value>hier</value>
+  </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
+  </data>
+  <data name="CantLocateText" xml:space="preserve">
+    <value>Konnte nicht orten</value>
+  </data>
+  <data name="PreparingTileText" xml:space="preserve">
+    <value>Bereite Kachel vor...</value>
+  </data>
+  <data name="PrivacyPolicyParagraph1" xml:space="preserve">
+    <value>Deine Position wird nur lokal verwendet und niemandem über das Internet gesendet. Keine weiteren potenziell heiklen Daten werden erfasst. Niemand, nicht einmal wir, hat über diese App Zugriff auf deine privaten Daten.</value>
+  </data>
+  <data name="PrivacyPolicyParagraph2" xml:space="preserve">
+    <value>Wir respektieren deine Privatsphäre; sollten wir auf irgendeine Weise sensible Daten von dir erhalten, werden wir sie vertraulich behandeln und niemandem weitergeben.</value>
+  </data>
+  <data name="CoordinatesDisplayDecimal" xml:space="preserve">
+    <value>Dezimal (1.034)</value>
+  </data>
+  <data name="CoordinatesDisplayDegreeMinutesSeconds" xml:space="preserve">
+    <value>DMS (1°2'3'')</value>
+  </data>
+  <data name="GeohashModeCurrentGraticule" xml:space="preserve">
+    <value>Aktuelle Graticule</value>
+  </data>
+  <data name="GeohashModeNearest" xml:space="preserve">
+    <value>Nächster</value>
+  </data>
+  <data name="GeoPrecisionDefault" xml:space="preserve">
+    <value>Normale Präzision</value>
+  </data>
+  <data name="GeoPrecisionDisabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="GeoPrecisionHigh" xml:space="preserve">
+    <value>Hohe Präzision</value>
+  </data>
+  <data name="MapCartographicModeAerial" xml:space="preserve">
+    <value>Luftbild</value>
+  </data>
+  <data name="MapCartographicModeHybrid" xml:space="preserve">
+    <value>Hybrid</value>
+  </data>
+  <data name="MapCartographicModeRoad" xml:space="preserve">
+    <value>Straße</value>
+  </data>
+  <data name="MapCartographicModeTerrain" xml:space="preserve">
+    <value>Gelände</value>
+  </data>
+  <data name="MapsAppLabel" xml:space="preserve">
+    <value>Geohash für dd.MM.yyyy, %LAT%, %LON%</value>
+  </data>
+  <data name="UnitSystemImperial" xml:space="preserve">
+    <value>Imperial</value>
+  </data>
+  <data name="UnitSystemMetric" xml:space="preserve">
+    <value>Metrisch</value>
+  </data>
+</root>
