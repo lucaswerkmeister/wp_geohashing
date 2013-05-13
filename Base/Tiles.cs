@@ -129,8 +129,8 @@ namespace Geohashing
 					Title = title,
 					BackgroundImage = new Uri("isostore:" + filename, UriKind.Absolute),
 					BackTitle = title,
-					BackContent = "Geohash is at " + settings.CoordinateToString(hash.Position) + "\n"
-									+ "Distance: " + settings.LengthToString(hash.Position.GetDistanceTo(location))
+					BackContent = settings.CoordinateToString(hash.Position) + ";\n"
+									+ settings.LengthToString(hash.Position.GetDistanceTo(location))
 				};
 			}
 			catch (Exception)
