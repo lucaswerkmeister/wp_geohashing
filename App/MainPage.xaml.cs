@@ -319,7 +319,13 @@ namespace Geohashing
 				return;
 			new MapsDirectionsTask
 			{
-				End = new LabeledMapLocation("Geohash for " + Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + ' ' + geohash.Graticule.North + ", " + geohash.Graticule.West, geohash.Position)
+				End = new LabeledMapLocation(AppResources.MapsAppLabel
+					.Replace("yyyy", Date.Year.ToString("D4", CultureInfo.CurrentUICulture))
+					.Replace("MM", Date.Month.ToString("D2", CultureInfo.CurrentUICulture))
+					.Replace("dd", Date.Day.ToString("D2", CultureInfo.CurrentUICulture))
+					.Replace("%LAT%", geohash.Graticule.North.ToString(CultureInfo.CurrentUICulture))
+					.Replace("%LON%", geohash.Graticule.West.ToString(CultureInfo.CurrentUICulture)),
+					geohash.Position)
 			}.Show();
 		}
 

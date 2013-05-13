@@ -224,4 +224,7 @@
   <data name="PrivacyPolicyParagraph2" xml:space="preserve">
     <value>We respect your privacy; should we, by some means, receive sensitive data from you, we will handle them confidentially and not pass them on to third parties.</value>
   </data>
+  <data name="MapsAppLabel" xml:space="preserve">
+    <value>Geohash for yyyy-MM-dd, %LAT%, %LON%</value>
+  </data>
 </root>

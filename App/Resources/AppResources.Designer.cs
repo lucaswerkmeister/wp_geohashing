@@ -259,6 +259,15 @@ namespace Geohashing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geohash for yyyy-MM-dd, %LAT%, %LON%.
+        /// </summary>
+        public static string MapsAppLabel {
+            get {
+                return ResourceManager.GetString("MapsAppLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DJIA not available.
         /// </summary>
         public static string NoDjiaSuffix {
