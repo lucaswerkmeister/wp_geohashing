@@ -38,7 +38,7 @@
 
 	<phone:Panorama>
 
-		<phone:PanoramaItem Header="Settings">
+		<phone:PanoramaItem Header="{Binding Path=AppResources.SettingsPageTitle, Source={StaticResource LocalizedStrings}}">
 			<Grid Background="Transparent">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
@@ -47,27 +47,28 @@
 
 				<ScrollViewer x:Name="scrollViewer" Grid.Row="1" Margin="12,0,12,0">
 					<StackPanel>
-						<CheckBox Content="Locate on app start" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<CheckBox Content="Auto-zoom" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<CheckBox Content="Only load tile images over WiFi" IsChecked="{Binding LoadImagesOverWifi, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<TextBlock TextWrapping="Wrap" Text="Map mode"/>
+						<CheckBox Content="{Binding Path=AppResources.LocateOnAppStartText, Source={StaticResource LocalizedStrings}}" IsChecked="{Binding Localize, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<CheckBox Content="{Binding Path=AppResources.AutoZoomText, Source={StaticResource LocalizedStrings}}" IsChecked="{Binding AutoZoom, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<CheckBox Content="{Binding Path=AppResources.ImagesOverWifiText, Source={StaticResource LocalizedStrings}}" IsChecked="{Binding LoadImagesOverWifi, Mode=TwoWay, Source={StaticResource settings}}"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.MapModeText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<TextBlock TextWrapping="Wrap" Text="DJIA buffer size"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.DjiaBufferSizeText, Source={StaticResource LocalizedStrings}}"/>
 						<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
-						<TextBlock TextWrapping="Wrap" Text="Geohash mode"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.GeohashModeText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<TextBlock TextWrapping="Wrap" Text="Coordinates mode"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.CoordinatesModeText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="coordinatesModeListPicker" SelectedIndex="{Binding CoordinatesMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
-						<TextBlock TextWrapping="Wrap" Text="Lenght units"/>
+						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.LengthUnitsText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="lengthUnitListPicker" SizeChanged="scrollToLengthUnitListPicker" SelectedIndex="{Binding LengthUnit, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 					</StackPanel>
 				</ScrollViewer>
 			</Grid>
 		</phone:PanoramaItem>
 
-		<phone:PanoramaItem Header="About" VerticalAlignment="Top">
+		<phone:PanoramaItem Header="{Binding Path=AppResources.AboutPageTitle, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top">
 			<StackPanel>
-				<RichTextBox TextWrapping="Wrap">
+				<RichTextBox x:Name="AboutRichTextBox" TextWrapping="Wrap">
+					<!--DO NOT EDIT - will be replaced in code-->
 					<Paragraph>
 						Geohashing for Windows Phone, version 1.0.0.0, developed by Lucas Werkmeister.
 					</Paragraph>
@@ -85,8 +86,9 @@
 						<Hyperlink NavigateUri="mailto:mail@lucaswerkmeister.de" TargetName="_">send me an e-mail.</Hyperlink>
 					</Paragraph>
 				</RichTextBox>
-				<TextBlock FontSize="25">Privacy policy</TextBlock>
-				<RichTextBox TextWrapping="Wrap">
+				<TextBlock FontSize="25" Text="{Binding Path=AppResources.PrivacyPolicyTitle, Source={StaticResource LocalizedStrings}}"/>
+				<RichTextBox x:Name="PrivacyPolicyRichTextBox" TextWrapping="Wrap">
+					<!--DO NOT EDIT - will be replaced in code-->
 					<Paragraph>
 						Your location information is used only locally and not sent to anyone over the internet. Other potentially sensitive data is not used. No one, not even us, has access to your sensitive data over this app.
 					</Paragraph>

@@ -15,12 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Geohashing.Resources;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,6 +31,8 @@ namespace Geohashing
 {
 	public partial class SettingsPage : PhoneApplicationPage
 	{
+		private delegate string StringReplacer(string input);
+
 		public SettingsPage()
 		{
 			InitializeComponent();
@@ -47,13 +51,45 @@ namespace Geohashing
 
 			rawValues = Enum.GetValues(typeof(CoordinatesDisplay));
 			values = new List<string>();
-			foreach(CoordinatesDisplay e in rawValues)
+			foreach (CoordinatesDisplay e in rawValues)
 				values.Add((typeof(CoordinatesDisplay).GetMember(e.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description);
 			coordinatesModeListPicker.ItemsSource = values;
 			coordinatesModeListPicker.SelectedItem = (typeof(CoordinatesDisplay).GetMember(settings.CoordinatesMode.ToString())[0].GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as DescriptionAttribute).Description;
 
 			lengthUnitListPicker.ItemsSource = Enum.GetValues(typeof(UnitSystem));
 			lengthUnitListPicker.SelectedItem = settings.LengthUnit;
+
+			StringReplacer replacer = (string text) => text.Replace("%VERSION%", new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version.ToString())
+				.Replace("%SOURCELINK%", @"<Hyperlink NavigateUri=""https://www.github.com/lucaswerkmeister/wp_geohashing"" TargetName=""_"">" + AppResources.AboutSourceLink + @"</Hyperlink>")
+				.Replace("%BUGREPORTLINK%", @"<Hyperlink NavigateUri=""https://www.github.com/lucaswerkmeister/wp_geohashing/issues/new"" TargetName=""_"">" + AppResources.AboutBugReportLink + @"</Hyperlink>")
+				.Replace("%EMAILLINK%", @"<Hyperlink NavigateUri=""mailto:mail@lucaswerkmeister.de"" TargetName=""_"">" + AppResources.AboutEmailLink + @"</Hyperlink>");
+			AboutRichTextBox.Xaml = @"
+				<Section 
+					xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+					<Paragraph>
+						" + replacer(AppResources.AboutParagraph1) + @"
+					</Paragraph>
+					<Paragraph>
+						" + replacer(AppResources.AboutParagraph2) + @"
+					</Paragraph>
+					<Paragraph>
+						" + replacer(AppResources.AboutParagraph3) + @"
+					</Paragraph>
+					<Paragraph>
+						" + replacer(AppResources.AboutParagraph4) + @"
+					</Paragraph>
+				</Section>";
+
+			PrivacyPolicyRichTextBox.Xaml = @"
+				<Section
+					xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+					<Paragraph>
+						" + AppResources.PrivacyPolicyParagraph1 + @"
+					</Paragraph>
+					<Paragraph>
+						" + AppResources.PrivacyPolicyParagraph2 + @"
+					</Paragraph>
+				</Section>";
 		}
 
 		private void DjiaBufferSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

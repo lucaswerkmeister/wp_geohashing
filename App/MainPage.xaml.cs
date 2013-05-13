@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using Geohashing.Resources;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Maps.Toolkit;
@@ -22,17 +23,12 @@ using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
-using System.Collections.Generic;
 using System.Device.Location;
 using System.Globalization;
-using System.IO;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Windows.Devices.Geolocation;
 
@@ -58,6 +54,8 @@ namespace Geohashing
 			Date = DateTime.Now;
 
 			InitializeComponent();
+
+			BuildLocalizedApplicationBar();
 
 			map.Layers.Add(geohashLayer);
 			map.Layers.Add(currentLocationLayer);
@@ -88,6 +86,26 @@ namespace Geohashing
 				redrawLocationPin();
 				await PointMapToCurrentGeohash();
 			}
+		}
+
+		private void BuildLocalizedApplicationBar()
+		{
+			ApplicationBar = new ApplicationBar { Mode = ApplicationBarMode.Minimized, IsVisible = true, IsMenuEnabled = true };
+
+			ApplicationBarIconButton relocateButton = new ApplicationBarIconButton { Text = AppResources.ReloadLocationButtonText, IconUri = new Uri("/Images/feature.search.png", UriKind.Relative) };
+			ApplicationBarIconButton settingsButton = new ApplicationBarIconButton { Text = AppResources.SettingsAboutButtonText, IconUri = new Uri("/Images/feature.settings.png", UriKind.Relative) };
+			ApplicationBarIconButton pinButton = new ApplicationBarIconButton { Text = AppResources.PinStartScreenButtonText, IconUri = new Uri("/Images/favs.png", UriKind.Relative) };
+			ApplicationBarIconButton sendToMapsButton = new ApplicationBarIconButton { Text = AppResources.OpenInMapsButtonText, IconUri = new Uri("/Images/next.png", UriKind.Relative) };
+
+			relocateButton.Click += Relocate_Click;
+			settingsButton.Click += Settings_Click;
+			pinButton.Click += Pin_Click;
+			sendToMapsButton.Click += Goto_Click;
+
+			ApplicationBar.Buttons.Add(relocateButton);
+			ApplicationBar.Buttons.Add(settingsButton);
+			ApplicationBar.Buttons.Add(pinButton);
+			ApplicationBar.Buttons.Add(sendToMapsButton);
 		}
 
 		#region UI utility methods safe to call from any thread
@@ -199,7 +217,7 @@ namespace Geohashing
 
 		public async Task UpdateCurrentLocation()
 		{
-			startTask("Getting location...");
+			startTask(AppResources.GettingLocationText);
 
 			try
 			{
@@ -212,7 +230,7 @@ namespace Geohashing
 			}
 			catch (Exception)
 			{
-				endTask("Unable to fetch location");
+				endTask(AppResources.CantLocateText);
 			}
 		}
 
@@ -221,7 +239,7 @@ namespace Geohashing
 			if (coordinate == null)
 				return;
 
-			startTask("Loading hash...");
+			startTask(AppResources.LoadingHashText);
 
 			try
 			{
@@ -231,13 +249,13 @@ namespace Geohashing
 			}
 			catch (NoDjiaException e)
 			{
-				string message = "Unable to load hash";
+				string message = AppResources.CantLoadHashPrefix;
 				switch (e.Cause)
 				{
 					case NoDjiaException.NoDjiaCause.NotAvailable:
-						message += ": DJIA not available"; break;
+						message += ": " + AppResources.NoDjiaSuffix; break;
 					case NoDjiaException.NoDjiaCause.NoInternet:
-						message += ": No internet connection"; break;
+						message += ": " + AppResources.NoInternetSuffix; break;
 				}
 				endTask(message);
 			}
@@ -286,7 +304,7 @@ namespace Geohashing
 			Uri uri = Tiles.MakeUri(coordinate.Latitude, coordinate.Longitude, settings.HashMode, settings.CartographicMode);
 			if (!ShellTile.ActiveTiles.Any((existing) => existing.NavigationUri.Equals(uri)))
 			{
-				startTask("Preparing live tile...");
+				startTask(AppResources.PreparingTileText);
 				FlipTileData tileData = await Tiles.CreateTileData(uri);
 				endTask();
 				ShellTile.Create(uri, tileData, false);

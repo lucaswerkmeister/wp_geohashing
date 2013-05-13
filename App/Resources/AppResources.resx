@@ -128,10 +128,100 @@
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Geohashing</value>
   </data>
-  <data name="AppBarButtonText" xml:space="preserve">
-    <value>add</value>
+  <data name="AutoZoomText" xml:space="preserve">
+    <value>Auto-zoom</value>
   </data>
-  <data name="AppBarMenuItemText" xml:space="preserve">
-    <value>Menu Item</value>
+  <data name="CantLoadHashPrefix" xml:space="preserve">
+    <value>Unable to load hash</value>
+  </data>
+  <data name="CoordinatesModeText" xml:space="preserve">
+    <value>Coordinates mode</value>
+  </data>
+  <data name="DjiaBufferSizeText" xml:space="preserve">
+    <value>DJIA buffer size</value>
+  </data>
+  <data name="GeohashModeText" xml:space="preserve">
+    <value>Geohash mode</value>
+  </data>
+  <data name="GettingLocationText" xml:space="preserve">
+    <value>Getting location...</value>
+  </data>
+  <data name="ImagesOverWifiText" xml:space="preserve">
+    <value>Only load tile images over WiFi</value>
+  </data>
+  <data name="LengthUnitsText" xml:space="preserve">
+    <value>Length units</value>
+  </data>
+  <data name="LoadingHashText" xml:space="preserve">
+    <value>Loading hash...</value>
+  </data>
+  <data name="LocateOnAppStartText" xml:space="preserve">
+    <value>Locate on app start</value>
+  </data>
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>Current hash</value>
+  </data>
+  <data name="MapModeText" xml:space="preserve">
+    <value>Map mode</value>
+  </data>
+  <data name="NoDjiaSuffix" xml:space="preserve">
+    <value>DJIA not available</value>
+  </data>
+  <data name="NoInternetSuffix" xml:space="preserve">
+    <value>No internet connection</value>
+  </data>
+  <data name="OpenInMapsButtonText" xml:space="preserve">
+    <value>open in Maps</value>
+  </data>
+  <data name="PinStartScreenButtonText" xml:space="preserve">
+    <value>pin to start screen</value>
+  </data>
+  <data name="ReloadLocationButtonText" xml:space="preserve">
+    <value>reload location</value>
+  </data>
+  <data name="SettingsAboutButtonText" xml:space="preserve">
+    <value>settings &amp; about</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="AboutBugReportLink" xml:space="preserve">
+    <value>Report it</value>
+  </data>
+  <data name="AboutEmailLink" xml:space="preserve">
+    <value>send me an e-mail</value>
+  </data>
+  <data name="AboutPageTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutParagraph1" xml:space="preserve">
+    <value>Geohashing for Windows Phone, version %VERSION%, developed by Lucas Werkmeister.</value>
+  </data>
+  <data name="AboutParagraph2" xml:space="preserve">
+    <value>This program is free software, licensed under the GNU General Public License, version 3.</value>
+  </data>
+  <data name="AboutParagraph3" xml:space="preserve">
+    <value>You can view the source code %SOURCELINK%.</value>
+  </data>
+  <data name="AboutParagraph4" xml:space="preserve">
+    <value>Found a bug? %BUGREPORTLINK%! Or just %EMAILLINK%.</value>
+  </data>
+  <data name="AboutSourceLink" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="CantLocateText" xml:space="preserve">
+    <value>Unable to fetch location</value>
+  </data>
+  <data name="PreparingTileText" xml:space="preserve">
+    <value>Preparing live tile...</value>
+  </data>
+  <data name="PrivacyPolicyParagraph1" xml:space="preserve">
+    <value>Your location information is used only locally and not sent to anyone over the internet. Other potentially sensitive data is not used. No one, not even us, has access to your sensitive data over this app.</value>
+  </data>
+  <data name="PrivacyPolicyParagraph2" xml:space="preserve">
+    <value>We respect your privacy; should we, by some means, receive sensitive data from you, we will handle them confidentially and not pass them on to third parties.</value>
   </data>
 </root>

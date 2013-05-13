@@ -61,20 +61,74 @@ namespace Geohashing.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add.
+        ///   Looks up a localized string similar to Report it.
         /// </summary>
-        public static string AppBarButtonText {
+        public static string AboutBugReportLink {
             get {
-                return ResourceManager.GetString("AppBarButtonText", resourceCulture);
+                return ResourceManager.GetString("AboutBugReportLink", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Menu Item.
+        ///   Looks up a localized string similar to send me an e-mail.
         /// </summary>
-        public static string AppBarMenuItemText {
+        public static string AboutEmailLink {
             get {
-                return ResourceManager.GetString("AppBarMenuItemText", resourceCulture);
+                return ResourceManager.GetString("AboutEmailLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutPageTitle {
+            get {
+                return ResourceManager.GetString("AboutPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geohashing for Windows Phone, version %VERSION%, developed by Lucas Werkmeister..
+        /// </summary>
+        public static string AboutParagraph1 {
+            get {
+                return ResourceManager.GetString("AboutParagraph1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This program is free software, licensed under the GNU General Public License, version 3..
+        /// </summary>
+        public static string AboutParagraph2 {
+            get {
+                return ResourceManager.GetString("AboutParagraph2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can view the source code %SOURCELINK%..
+        /// </summary>
+        public static string AboutParagraph3 {
+            get {
+                return ResourceManager.GetString("AboutParagraph3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found a bug? %BUGREPORTLINK%! Or just %EMAILLINK%..
+        /// </summary>
+        public static string AboutParagraph4 {
+            get {
+                return ResourceManager.GetString("AboutParagraph4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to here.
+        /// </summary>
+        public static string AboutSourceLink {
+            get {
+                return ResourceManager.GetString("AboutSourceLink", resourceCulture);
             }
         }
         
@@ -84,6 +138,204 @@ namespace Geohashing.Resources {
         public static string ApplicationTitle {
             get {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-zoom.
+        /// </summary>
+        public static string AutoZoomText {
+            get {
+                return ResourceManager.GetString("AutoZoomText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load hash.
+        /// </summary>
+        public static string CantLoadHashPrefix {
+            get {
+                return ResourceManager.GetString("CantLoadHashPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to fetch location.
+        /// </summary>
+        public static string CantLocateText {
+            get {
+                return ResourceManager.GetString("CantLocateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coordinates mode.
+        /// </summary>
+        public static string CoordinatesModeText {
+            get {
+                return ResourceManager.GetString("CoordinatesModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DJIA buffer size.
+        /// </summary>
+        public static string DjiaBufferSizeText {
+            get {
+                return ResourceManager.GetString("DjiaBufferSizeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geohash mode.
+        /// </summary>
+        public static string GeohashModeText {
+            get {
+                return ResourceManager.GetString("GeohashModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting location....
+        /// </summary>
+        public static string GettingLocationText {
+            get {
+                return ResourceManager.GetString("GettingLocationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only load tile images over WiFi.
+        /// </summary>
+        public static string ImagesOverWifiText {
+            get {
+                return ResourceManager.GetString("ImagesOverWifiText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length units.
+        /// </summary>
+        public static string LengthUnitsText {
+            get {
+                return ResourceManager.GetString("LengthUnitsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading hash....
+        /// </summary>
+        public static string LoadingHashText {
+            get {
+                return ResourceManager.GetString("LoadingHashText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate on app start.
+        /// </summary>
+        public static string LocateOnAppStartText {
+            get {
+                return ResourceManager.GetString("LocateOnAppStartText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current hash.
+        /// </summary>
+        public static string MainPageTitle {
+            get {
+                return ResourceManager.GetString("MainPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map mode.
+        /// </summary>
+        public static string MapModeText {
+            get {
+                return ResourceManager.GetString("MapModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DJIA not available.
+        /// </summary>
+        public static string NoDjiaSuffix {
+            get {
+                return ResourceManager.GetString("NoDjiaSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No internet connection.
+        /// </summary>
+        public static string NoInternetSuffix {
+            get {
+                return ResourceManager.GetString("NoInternetSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to open in Maps.
+        /// </summary>
+        public static string OpenInMapsButtonText {
+            get {
+                return ResourceManager.GetString("OpenInMapsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pin to start screen.
+        /// </summary>
+        public static string PinStartScreenButtonText {
+            get {
+                return ResourceManager.GetString("PinStartScreenButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing live tile....
+        /// </summary>
+        public static string PreparingTileText {
+            get {
+                return ResourceManager.GetString("PreparingTileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your location information is used only locally and not sent to anyone over the internet. Other potentially sensitive data is not used. No one, not even us, has access to your sensitive data over this app..
+        /// </summary>
+        public static string PrivacyPolicyParagraph1 {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyParagraph1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We respect your privacy; should we, by some means, receive sensitive data from you, we will handle them confidentially and not pass them on to third parties..
+        /// </summary>
+        public static string PrivacyPolicyParagraph2 {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyParagraph2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy policy.
+        /// </summary>
+        public static string PrivacyPolicyTitle {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reload location.
+        /// </summary>
+        public static string ReloadLocationButtonText {
+            get {
+                return ResourceManager.GetString("ReloadLocationButtonText", resourceCulture);
             }
         }
         
@@ -102,6 +354,24 @@ namespace Geohashing.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings &amp; about.
+        /// </summary>
+        public static string SettingsAboutButtonText {
+            get {
+                return ResourceManager.GetString("SettingsAboutButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsPageTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageTitle", resourceCulture);
             }
         }
     }

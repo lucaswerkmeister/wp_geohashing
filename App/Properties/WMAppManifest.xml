@@ -22,14 +22,10 @@
 					<Count>0</Count>
 					<BackgroundImageURI IsRelative="true" IsResource="false">Logos\336x336.png</BackgroundImageURI>
 					<Title>Geohashing</Title>
-					<BackContent>
-					</BackContent>
-					<BackBackgroundImageURI>
-					</BackBackgroundImageURI>
-					<BackTitle>
-					</BackTitle>
-					<DeviceLockImageURI>
-					</DeviceLockImageURI>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
+          <DeviceLockImageURI></DeviceLockImageURI>
 					<HasLarge>False</HasLarge>
 				</TemplateFlip>
 			</PrimaryToken>

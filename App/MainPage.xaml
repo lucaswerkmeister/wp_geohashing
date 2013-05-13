@@ -39,8 +39,8 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Margin="12,17,0,28">
-			<TextBlock Text="Geohashing" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-			<TextBlock Text="Current hash" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+			<TextBlock Text="{Binding Path=AppResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+			<TextBlock Text="{Binding Path=AppResources.MainPageTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
 		<Grid Grid.Row="1" Margin="12,0,12,0">
@@ -62,11 +62,11 @@
 
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Mode="Minimized" IsVisible="True" IsMenuEnabled="True">
-			<!--<shell:ApplicationBarIconButton Click="Reload_Click" IconUri="/Images/refresh.png" Text="reload geohash"/>-->
-			<shell:ApplicationBarIconButton Click="Relocate_Click" IconUri="/Images/feature.search.png" Text="reload location"/>
-			<shell:ApplicationBarIconButton Click="Settings_Click" IconUri="/Images/feature.settings.png" Text="settings &amp; about"/>
-			<shell:ApplicationBarIconButton Click="Pin_Click" IconUri="/Images/favs.png" Text="pin to start screen"/>
-			<shell:ApplicationBarIconButton Click="Goto_Click" IconUri="/Images/next.png" Text="open in Maps"/>
+			<!--DO NOT EDIT - this is overwritten in MainPage.BuildLocalizedAppBar() and only in the XAML for reference when working with the visualizer.-->
+			<shell:ApplicationBarIconButton x:Name="RelocateButton" Click="Relocate_Click" IconUri="/Images/feature.search.png" Text="reload location"/>
+			<shell:ApplicationBarIconButton x:Name="SettingsButton" Click="Settings_Click" IconUri="/Images/feature.settings.png" Text="settings &amp; about"/>
+			<shell:ApplicationBarIconButton x:Name="PinButton" Click="Pin_Click" IconUri="/Images/favs.png" Text="pin to start screen"/>
+			<shell:ApplicationBarIconButton x:Name="SendToMapsButton" Click="Goto_Click" IconUri="/Images/next.png" Text="open in Maps"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
