@@ -266,4 +266,13 @@
   <data name="UnitSystemMetric" xml:space="preserve">
     <value>Metric</value>
   </data>
+  <data name="OverlayDistancePrefix" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="OverlayGeohashPrefix" xml:space="preserve">
+    <value>Geohash</value>
+  </data>
+  <data name="OverlayPositionPrefix" xml:space="preserve">
+    <value>Position</value>
+  </data>
 </root>

@@ -394,6 +394,33 @@ namespace Geohashing.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string OverlayDistancePrefix {
+            get {
+                return ResourceManager.GetString("OverlayDistancePrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geohash.
+        /// </summary>
+        public static string OverlayGeohashPrefix {
+            get {
+                return ResourceManager.GetString("OverlayGeohashPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string OverlayPositionPrefix {
+            get {
+                return ResourceManager.GetString("OverlayPositionPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pin to start screen.
         /// </summary>
         public static string PinStartScreenButtonText {

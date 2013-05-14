@@ -199,9 +199,9 @@ namespace Geohashing
 			Dispatcher.BeginInvoke(() =>
 			{
 				info.Text = geohash == null ? "" :
-							"Position: " + settings.CoordinateToString(coordinate) + "\n"
-							+ "Geohash: " + settings.CoordinateToString(geohash.Position) + "\n"
-							+ "Distance: " + settings.LengthToString(coordinate.GetDistanceTo(geohash.Position));
+							AppResources.OverlayPositionPrefix + ": " + settings.CoordinateToString(coordinate) + "\n" +
+							AppResources.OverlayGeohashPrefix + ": " + settings.CoordinateToString(geohash.Position) + "\n" +
+							AppResources.OverlayDistancePrefix + ": " + settings.LengthToString(coordinate.GetDistanceTo(geohash.Position));
 			});
 		}
 
