@@ -221,7 +221,7 @@ namespace Geohashing
 
 			try
 			{
-				coordinate = (await new Geolocator { DesiredAccuracy = PositionAccuracy.Default }.GetGeopositionAsync()).Coordinate.Convert();
+				coordinate = (await new Geolocator { DesiredAccuracy = PositionAccuracy.Default }.GetGeopositionAsync(TimeSpan.Zero, TimeSpan.FromSeconds(10))).Coordinate.Convert();
 				redrawLocationPin();
 
 				endTask();
