@@ -69,7 +69,7 @@ namespace Geohashing
 		protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
-			if (NavigationContext.QueryString.ContainsKey("lat") && NavigationContext.QueryString.ContainsKey("lon"))
+			if (e.NavigationMode == System.Windows.Navigation.NavigationMode.New && NavigationContext.QueryString.ContainsKey("lat") && NavigationContext.QueryString.ContainsKey("lon"))
 			{
 				coordinate = new GeoCoordinate(Double.Parse(NavigationContext.QueryString["lat"], CultureInfo.InvariantCulture), Double.Parse(NavigationContext.QueryString["lon"], CultureInfo.InvariantCulture));
 				if (NavigationContext.QueryString.ContainsKey("mode"))
