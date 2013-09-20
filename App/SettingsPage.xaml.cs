@@ -96,11 +96,9 @@ namespace Geohashing
 		private void DjiaBufferSizeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
 		{
 			TextBox t = (TextBox)sender;
-			if (t.Text.Contains(".") || t.Text.Contains(","))
-			{
-				t.Text = t.Text.Replace(".", "").Replace(",", "");
-				t.SelectionStart = t.Text.Length;
-			}
+			int oldSelectionStart = t.SelectionStart;
+			t.Text = new System.Text.RegularExpressions.Regex(@"\D").Replace(t.Text, ""); // remove any non-digits (\D)
+			t.SelectionStart = Math.Min(oldSelectionStart, t.Text.Length); // Setting t.Text resets t.SelectionStart to 0, so do this even if nothing changed
 		}
 
 		/// <summary>

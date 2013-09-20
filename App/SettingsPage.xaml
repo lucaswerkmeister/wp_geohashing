@@ -53,7 +53,7 @@
 						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.MapModeText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="cartographicModeListPicker" SelectedIndex="{Binding CartographicMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.DjiaBufferSizeText, Source={StaticResource LocalizedStrings}}"/>
-						<TextBox Height="72" InputScope="Digits" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
+						<TextBox Height="72" InputScope="Number" TextWrapping="Wrap" Text="{Binding DjiaBufferSize, Mode=TwoWay, Source={StaticResource settings}}" TextChanged="DjiaBufferSizeTextBox_TextChanged"/>
 						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.GeohashModeText, Source={StaticResource LocalizedStrings}}"/>
 						<toolkit:ListPicker x:Name="geohashModeListPicker" SelectedIndex="{Binding HashMode, Converter={StaticResource enumIntConverter}, Mode=TwoWay, Source={StaticResource settings}}"/>
 						<TextBlock TextWrapping="Wrap" Text="{Binding Path=AppResources.CoordinatesModeText, Source={StaticResource LocalizedStrings}}"/>
