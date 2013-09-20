@@ -359,5 +359,11 @@ namespace Geohashing
 
 			return ret;
 		}
+
+		private void map_Loaded(object sender, RoutedEventArgs e)
+		{
+			Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = PrivateResources.MicrosoftMapServiceApplicationID;
+			Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = PrivateResources.MicrosoftMapServiceAuthToken;
+		}
 	}
 }
