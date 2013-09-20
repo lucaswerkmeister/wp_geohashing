@@ -261,10 +261,10 @@
     <value>Geohash for yyyy-MM-dd, %LAT%, %LON%</value>
   </data>
   <data name="UnitSystemImperial" xml:space="preserve">
-    <value>Imperial</value>
+    <value>Imperial (miles)</value>
   </data>
   <data name="UnitSystemMetric" xml:space="preserve">
-    <value>Metric</value>
+    <value>Metric (kilometres)</value>
   </data>
   <data name="OverlayDistancePrefix" xml:space="preserve">
     <value>Distance</value>

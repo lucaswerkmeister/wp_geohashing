@@ -132,7 +132,7 @@
     <value>Auto-zoom</value>
   </data>
   <data name="CantLoadHashPrefix" xml:space="preserve">
-    <value>Konnte hash nicht laden</value>
+    <value>Fehler</value>
   </data>
   <data name="CoordinatesModeText" xml:space="preserve">
     <value>Koordinaten-Modus</value>
@@ -147,7 +147,7 @@
     <value>Orten...</value>
   </data>
   <data name="ImagesOverWifiText" xml:space="preserve">
-    <value>Kachelbilder nur über WLAN laden</value>
+    <value>Live Tile nur über WLAN aktualisieren</value>
   </data>
   <data name="LengthUnitsText" xml:space="preserve">
     <value>Längeneinheit</value>
@@ -162,7 +162,7 @@
     <value>Aktueller hash</value>
   </data>
   <data name="MapModeText" xml:space="preserve">
-    <value>Kartenmodus</value>
+    <value>Karten-Modus</value>
   </data>
   <data name="NoDjiaSuffix" xml:space="preserve">
     <value>Dow Jones nicht verfügbar</value>
@@ -171,13 +171,13 @@
     <value>Keine Internetverbindung</value>
   </data>
   <data name="OpenInMapsButtonText" xml:space="preserve">
-    <value>in Maps öffnen</value>
+    <value>In Maps öffnen</value>
   </data>
   <data name="PinStartScreenButtonText" xml:space="preserve">
-    <value>anpinnen</value>
+    <value>Anpinnen</value>
   </data>
   <data name="ReloadLocationButtonText" xml:space="preserve">
-    <value>erneut orten</value>
+    <value>Erneut orten</value>
   </data>
   <data name="SettingsAboutButtonText" xml:space="preserve">
     <value>Einstellungen &amp; Über</value>
@@ -261,10 +261,10 @@
     <value>Geohash für dd.MM.yyyy, %LAT%, %LON%</value>
   </data>
   <data name="UnitSystemImperial" xml:space="preserve">
-    <value>Imperial</value>
+    <value>Imperial (Meilen)</value>
   </data>
   <data name="UnitSystemMetric" xml:space="preserve">
-    <value>Metrisch</value>
+    <value>Metrisch (Kilometer)</value>
   </data>
   <data name="OverlayDistancePrefix" xml:space="preserve">
     <value>Entfernung</value>
