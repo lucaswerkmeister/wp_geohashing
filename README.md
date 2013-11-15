@@ -22,7 +22,6 @@ To run the app from source, you must:
    * Get yourself a developer account, if you don't already have one
    * Register your phone for development, if you haven't already
    * Run the app on "Device" (remember, I could be evil - be careful :) )
-If that's too much effort for you, I think I will release a first version of the app very soon - just wait for it.
 
 Contributing
 ============
