@@ -30,7 +30,7 @@ namespace Geohashing
 	{
 		public static void Main(string[] args)
 		{
-			new Thread(() => MD5.Digest("message digest")).Start();
+			Task.Run(() => MD5.Digest("message digest"));
 		}
 
 		public static string MyToString(this object obj)
