@@ -135,15 +135,15 @@ namespace Geohashing
 					Value = 0
 				});
 				if (hasText)
-					new Thread(() =>
+					Task.Run(async () =>
 					{
-						Thread.Sleep(TimeSpan.FromSeconds(5));
+						await Task.Delay(TimeSpan.FromSeconds(5));
 						Dispatcher.BeginInvoke(() =>
 							SystemTray.SetProgressIndicator(this, new ProgressIndicator
 							{
 								IsVisible = false
 							}));
-					}).Start();
+					});
 			});
 		}
 
