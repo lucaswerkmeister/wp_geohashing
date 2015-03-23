@@ -1,5 +1,12 @@
 A Geohashing app for the Windows Phone.
 
+State of the project
+====================
+
+Development of this app has, for my part, ended. I have lost interest in the Windows Phone platform, my main desktop OS is no longer Windows, and I no longer have a Windows Phone device available to debug on.
+
+I am happy with the state the app is left in. It can be considered complete (Wiki integration, see below, is an optional feature), and there are no known bugs nor crashes. You are of course welcome to continue development yourself under the terms of the license.
+
 Features
 ========
 * On startup, your location and the according Geohash is loaded and displayed on the map.
