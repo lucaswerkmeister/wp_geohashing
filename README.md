@@ -7,6 +7,10 @@ Development of this app has, for my part, ended. I have lost interest in the Win
 
 I am happy with the state the app is left in. It can be considered complete (Wiki integration, see below, is an optional feature), and there are no known bugs nor crashes. You are of course welcome to continue development yourself under the terms of the license.
 
+**2016-09-12 Update:** Microsoft has informed me that the app is now broken and will be removed from the Microsoft Store.
+For the above reasons, I am not going to fix or update it.
+Farewell, Windows Phone platform.
+
 Features
 ========
 * On startup, your location and the according Geohash is loaded and displayed on the map.
